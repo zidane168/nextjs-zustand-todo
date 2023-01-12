@@ -1,0 +1,11 @@
+.table {
+    @apply border border-gray-300 bg-gray-200 mx-auto
+}
+
+.table tr th {
+    @apply text-orange-600
+}
+
+.table tr th, .table tr td {
+    @apply p-[10px] border-[3px] border-gray-100
+}
