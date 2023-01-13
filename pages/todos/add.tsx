@@ -6,11 +6,13 @@ import TDHeader from "./../../components/TDHeader"
 import TDFooter from "./../../components/TDFooter"
 import TDTitle from "./../../components/TDTitle"
 import TDCombobox from "./../../components/TDCombobox"
+import moment from 'moment'
 
 export default function Add() {
 
     const { todos, types, addTodo }  = useStore();
-    const today = Date.now;
+    const today = moment().format('YYYY-MM-DD');
+    console.log(today)
 
     return (
         <>
