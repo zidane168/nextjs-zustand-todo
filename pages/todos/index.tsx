@@ -52,8 +52,8 @@ export default function Index() {
                                                 <td> { item.job } </td>
                                                 <td> <span className="bg-green-800 p-2 rounded-lg text-white"> { item.type } </span> </td>
                                                 <td> { item.remark } </td>
-                                                <td> { item.date }  </td> 
-                                                <td className=""> 
+                                                <td> { item.dueDate }  </td> 
+                                                <td> 
                                                     <div className="flex space-x-2">
                                                         <span className="rounded-md p-2 bg-sky-500 text-white"> Add  </span>
                                                         <span className="rounded-md p-2 bg-yellow-500 text-white"> Edit  </span>
