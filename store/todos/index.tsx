@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
 import { IItem } from './../../utils/interface'
 import { STATUS } from './../../utils/contants'
 
@@ -8,7 +9,7 @@ interface ITodoState {
     type: string; 
     remark: string;
     dueDate: Date;
-    status: string;
+    status: STATUS.DOING;
     created: Date;
 }
 
@@ -20,7 +21,7 @@ interface IListTodoState {
     removeTodo: (id: number) => void;
 }
  
-const useStore = create<IListTodoState>((set, get) => ({
+const useStore = create<IListTodoState>(devtools((set, get) => ({
     todos: [],
     types: [
         {'name': 'Home', 'value': 'Home'},
@@ -49,6 +50,6 @@ const useStore = create<IListTodoState>((set, get) => ({
             todos: items
         }))
     }
-}))
+})))
 
 export default useStore

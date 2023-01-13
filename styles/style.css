@@ -1,3 +1,5 @@
+ 
+
 .table {
     @apply border border-gray-300 bg-gray-200 mx-auto
 }
@@ -25,3 +27,32 @@ button:hover {
 .required-star {
     @apply text-rose-600 font-bold
 }
+
+
+/* button by zidane */
+button.success {
+    @apply rounded-md p-2 bg-green-500  text-white
+}
+
+button:hover.success { 
+    @apply bg-green-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
+}
+
+
+button.warning {
+    @apply rounded-md p-2 bg-yellow-500 text-white
+}
+
+button:hover.warning { 
+    @apply bg-yellow-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
+}
+
+button.danger {
+    @apply rounded-md p-2 bg-rose-500  text-white
+}
+
+button:hover.danger { 
+    @apply bg-rose-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
+}
+
+ 

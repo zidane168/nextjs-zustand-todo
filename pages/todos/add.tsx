@@ -1,8 +1,7 @@
 import { useRef }  from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+ 
 
-import useStore from "./../../store/todos"
+import useTodoStore from "./../../store/todos"
 import shallow from 'zustand/shallow'
 
 import TDHeader from "./../../components/TDHeader" 
@@ -13,16 +12,11 @@ import { TDEditIcon, TDRemoveIcon, TDMarkCompleteIcon } from "./../../components
 
 import moment from 'moment'
 
-import { STATUS } from './../../utils/contants'
-
-import Edit from 'public/icon/edit.svg'
-import MarkComplete from 'public/icon/mark-complete.svg'
-import Remove from 'public/icon/remove.svg'
-
+import { STATUS } from './../../utils/contants' 
 
 export default function Add() {
 
-    const { todos, types, addTodo, markCompleteTodo }  = useStore(  )
+    const { todos, types, addTodo, markCompleteTodo }  = useTodoStore(  )
     const today = moment().format('YYYY-MM-DD')
 
     const job = useRef() 
@@ -105,22 +99,22 @@ export default function Add() {
                                                 <td> <span className="bg-green-800 p-2 rounded-lg text-white"> { item.type } </span> </td>
                                                 <td> { item.remark } </td>
                                                 <td> { item.dueDate }  </td> 
-                                                <td className={ highlightOverDue }> { distance } days! </td> 
+                                                <td> <span className={ highlightOverDue }> { distance } </span> days! </td> 
                                                 <td> { item.status } </td> 
                                                 <td> 
                                                     <div className="flex space-x-2"> 
                                                     
-                                                        <span className="rounded-md p-2 bg-yellow-500 text-white">  
+                                                        <button className="warning ">  
                                                             <TDEditIcon bgColor="#FFF" width="20"/> 
-                                                        </span>
+                                                        </button>
                                                          
-                                                        <span className="rounded-md p-2 bg-rose-500 text-white">  
+                                                        <button className="danger">  
                                                             <TDRemoveIcon bgColor="#FFF" width="20"/>
-                                                        </span>
+                                                        </button>
                                                        
-                                                        <span className="rounded-md p-2 bg-green-700 text-white" onClick={ markCompleteTodo }>   
+                                                        <button className="success" onClick={ markCompleteTodo }>   
                                                             <TDMarkCompleteIcon bgColor="#FFF"  width="20"/>
-                                                        </span> 
+                                                        </button> 
                                                     </div>
                                                 </td> 
                                             </tr> 
