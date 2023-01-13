@@ -10,7 +10,7 @@
     @apply p-[10px] border-[3px] border-gray-100
 }
 
-input[type="text"] {
+input[type="text"], input[type="date"] {
     @apply p-2 w-full rounded-md
 }
 
@@ -20,4 +20,8 @@ button {
 
 button:hover { 
     @apply bg-orange-600   transform-gpu transition transition-all duration-700 hover:scale-90; 
+}
+
+.required-star {
+    @apply text-rose-600 font-bold
 }
