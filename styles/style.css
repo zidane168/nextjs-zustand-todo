@@ -9,3 +9,15 @@
 .table tr th, .table tr td {
     @apply p-[10px] border-[3px] border-gray-100
 }
+
+input[type="text"] {
+    @apply p-2 w-full rounded-md
+}
+
+button {
+    @apply px-6 py-2 bg-orange-500 text-white rounded-md 
+}
+
+button:hover { 
+    @apply bg-orange-600   transform-gpu transition transition-all duration-700 hover:scale-90; 
+}
