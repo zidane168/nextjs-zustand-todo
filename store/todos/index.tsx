@@ -34,7 +34,9 @@ const useStore = create<IListTodoState>(devtools((set, get) => ({
 
     markCompleteTodo: (id: number) => {
 
-        let item = get().todos[id];
+        let items = get().todos;
+
+        // items.filter((item, index) => index != )
  
         item.status = STATUS.COMPLETED
 
