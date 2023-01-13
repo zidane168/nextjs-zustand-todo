@@ -34,7 +34,8 @@ const useStore = create<IListTodoState>(devtools((set, get) => ({
 
     markCompleteTodo: (id: number) => {
 
-        let item = get().todos[id]
+        let item = get().todos[id];
+ 
         item.status = STATUS.COMPLETED
 
         set(state => ({
@@ -43,7 +44,7 @@ const useStore = create<IListTodoState>(devtools((set, get) => ({
     },
 
     removeTodo: (id: number) => {
-        let items = get().todos
+        let items = get().todos[id]
         items.splice(id, 1)
 
         set(state => ({

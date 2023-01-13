@@ -33,6 +33,10 @@ export default function Add() {
         addTodo(item)
     }
 
+    const markCompleteFunc = (no: number) => {
+        markCompleteTodo(0)
+    }
+
     return (
         <>
             <TDHeader />
@@ -112,7 +116,7 @@ export default function Add() {
                                                             <TDRemoveIcon bgColor="#FFF" width="20"/>
                                                         </button>
                                                        
-                                                        <button className="success" onClick={ markCompleteTodo }>   
+                                                        <button className="success" onClick={ () => markCompleteFunc(item.no) }>   
                                                             <TDMarkCompleteIcon bgColor="#FFF"  width="20"/>
                                                         </button> 
                                                     </div>
