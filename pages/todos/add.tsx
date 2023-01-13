@@ -9,7 +9,7 @@ import TDHeader from "./../../components/TDHeader"
 import TDFooter from "./../../components/TDFooter"
 import TDTitle from "./../../components/TDTitle"
 import TDCombobox from "./../../components/TDCombobox"
-import { TDRemoveIcon } from "./../../components/TDRemoveIcon"
+import { TDEditIcon, TDRemoveIcon, TDMarkCompleteIcon } from "./../../components/TDIcon" 
 
 import moment from 'moment'
 
@@ -18,6 +18,7 @@ import { STATUS } from './../../utils/contants'
 import Edit from 'public/icon/edit.svg'
 import MarkComplete from 'public/icon/mark-complete.svg'
 import Remove from 'public/icon/remove.svg'
+
 
 export default function Add() {
 
@@ -109,18 +110,16 @@ export default function Add() {
                                                 <td> 
                                                     <div className="flex space-x-2"> 
                                                     
-                                                        <span className="rounded-md p-2 bg-yellow-500 text-white"> 
-                                                            <Link href="/todos/edit">
-                                                                <Image src={ Edit } width="50" height="50" alt="Edit" />
-                                                            </Link>
+                                                        <span className="rounded-md p-2 bg-yellow-500 text-white">  
+                                                            <TDEditIcon bgColor="#FFF" width="20"/> 
                                                         </span>
                                                          
                                                         <span className="rounded-md p-2 bg-rose-500 text-white">  
-                                                            <TDRemoveIcon bgColor="#FFF"/>
+                                                            <TDRemoveIcon bgColor="#FFF" width="20"/>
                                                         </span>
                                                        
                                                         <span className="rounded-md p-2 bg-green-700 text-white" onClick={ markCompleteTodo }>   
-                                                            <Image src={ MarkComplete } width="50" height="50" alt="MarkComplete" />
+                                                            <TDMarkCompleteIcon bgColor="#FFF"  width="20"/>
                                                         </span> 
                                                     </div>
                                                 </td> 
