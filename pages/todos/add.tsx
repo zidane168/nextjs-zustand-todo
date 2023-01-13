@@ -3,11 +3,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import useStore from "./../../store/todos"
+import shallow from 'zustand/shallow'
 
 import TDHeader from "./../../components/TDHeader" 
 import TDFooter from "./../../components/TDFooter"
 import TDTitle from "./../../components/TDTitle"
 import TDCombobox from "./../../components/TDCombobox"
+import { TDRemoveIcon } from "./../../components/TDRemoveIcon"
+
 import moment from 'moment'
 
 import { STATUS } from './../../utils/contants'
@@ -18,7 +21,7 @@ import Remove from 'public/icon/remove.svg'
 
 export default function Add() {
 
-    const { todos, types, addTodo }  = useStore()
+    const { todos, types, addTodo, markCompleteTodo }  = useStore(  )
     const today = moment().format('YYYY-MM-DD')
 
     const job = useRef() 
@@ -105,17 +108,18 @@ export default function Add() {
                                                 <td> { item.status } </td> 
                                                 <td> 
                                                     <div className="flex space-x-2"> 
-                                                        <Link href="/todos/edit">
-                                                            <span className="rounded-md p-2 bg-yellow-500 text-white"> 
+                                                    
+                                                        <span className="rounded-md p-2 bg-yellow-500 text-white"> 
+                                                            <Link href="/todos/edit">
                                                                 <Image src={ Edit } width="50" height="50" alt="Edit" />
-                                                            </span>
-                                                        </Link>
-                                                        <Link href="/todos/remove">
-                                                            <span className="rounded-md p-2 bg-rose-500 text-white">  
-                                                                <Image src={ Remove } width="50" height="50" alt="Remove" />
-                                                            </span>
-                                                        </Link>  
-                                                        <span className="rounded-md p-2 bg-green-700 text-white" onClick={ markComplete }>   
+                                                            </Link>
+                                                        </span>
+                                                         
+                                                        <span className="rounded-md p-2 bg-rose-500 text-white">  
+                                                            <TDRemoveIcon bgColor="#FFF"/>
+                                                        </span>
+                                                       
+                                                        <span className="rounded-md p-2 bg-green-700 text-white" onClick={ markCompleteTodo }>   
                                                             <Image src={ MarkComplete } width="50" height="50" alt="MarkComplete" />
                                                         </span> 
                                                     </div>
