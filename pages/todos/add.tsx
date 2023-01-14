@@ -19,12 +19,14 @@ export default function Add() {
     const { todos, types, addTodo, markCompleteTodo }  = useTodoStore(  )
     const today = moment().format('YYYY-MM-DD')
 
+    const id = useRef()
     const job = useRef() 
     const dueDate = useRef()
     const remark = useRef()
 
     const add = () => {
         let item = {  
+            id: id.current.value,
             job: job.current.value,
             type: document.getElementById('Type').value,
             dueDate: dueDate.current.value,
@@ -45,6 +47,11 @@ export default function Add() {
             </TDTitle>
             <div className="flex space-x-2  mt-[10px] container mx-auto">
                 <div  className="bg-sky-300 shadow-lg p-4 mx-auto w-[1/3] rounded-md">
+                    <div>
+                        <label> <span className="required-star" > * </span> ID: </label>
+                        <input ref={ id } required type="text" name="id" placeholder="1"/>
+                    </div>
+
                     <div>
                         <label> <span className="required-star" > * </span> Job Name: </label>
                         <input ref={ job } required type="text" name="job" placeholder="Learn NextJS in 3 weeks"/>
@@ -98,7 +105,7 @@ export default function Add() {
                                     
                                     return (  
                                             <tr key={ index } > 
-                                                <td> { item.no } </td>
+                                                <td> { item.id } </td>
                                                 <td> { item.job } </td>
                                                 <td> <span className="bg-green-800 p-2 rounded-lg text-white"> { item.type } </span> </td>
                                                 <td> { item.remark } </td>
