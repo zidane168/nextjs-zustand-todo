@@ -4,7 +4,7 @@ import { IItem } from './../../utils/interface'
 import { STATUS } from './../../utils/contants'
 
 interface ITodoState {
-    id: number;
+    id: string;
     job: string;
     type: string; 
     remark: string;
@@ -32,22 +32,25 @@ const store = (set, get) => ({
         todos: [...state.todos, item]
     })),
 
-    markCompleteTodo: (id: number) => {
+    markCompleteTodo: (index: number) => {
 
         let items = get().todos;
 
-        // items.filter((item, index) => index != )
- 
-        item.status = STATUS.COMPLETED
+        let temp = { ...items[index] };
+        temp.status = STATUS.COMPLETED
+        items[index] = temp;
 
         set(state => ({
-            todos: [...state.todos, item]
+            todos: items
         })) 
     },
 
-    removeTodo: (id: number) => {
-        let items = get().todos[id]
-        items.splice(id, 1)
+    removeTodo: (id: string) => {
+        let items = get().todos
+
+        items = items.filter( (item, _) => {
+            return item.id != id
+        }) 
 
         set(state => ({
             todos: items

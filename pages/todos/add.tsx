@@ -16,7 +16,7 @@ import { STATUS } from './../../utils/contants'
 
 export default function Add() {
 
-    const { todos, types, addTodo, markCompleteTodo }  = useTodoStore(  )
+    const { todos, types, addTodo, removeTodo, markCompleteTodo }  = useTodoStore(  )
     const today = moment().format('YYYY-MM-DD')
 
     const id = useRef()
@@ -35,8 +35,8 @@ export default function Add() {
         addTodo(item)
     }
 
-    const markCompleteFunc = (no: number) => {
-        markCompleteTodo(0)
+    const markCompleteFunc = (index: number) => {
+        markCompleteTodo(index)
     }
 
     return (
@@ -119,11 +119,11 @@ export default function Add() {
                                                             <TDEditIcon bgColor="#FFF" width="20"/> 
                                                         </button>
                                                          
-                                                        <button className="danger">  
+                                                        <button className="danger" onClick={ () => removeTodo(item.id) }>  
                                                             <TDRemoveIcon bgColor="#FFF" width="20"/>
                                                         </button>
                                                        
-                                                        <button className="success" onClick={ () => markCompleteFunc(item.no) }>   
+                                                        <button className="success" onClick={ () => markCompleteFunc(index) }>   
                                                             <TDMarkCompleteIcon bgColor="#FFF"  width="20"/>
                                                         </button> 
                                                     </div>
