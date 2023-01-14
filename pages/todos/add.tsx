@@ -8,7 +8,7 @@ import TDHeader from "./../../components/TDHeader"
 import TDFooter from "./../../components/TDFooter"
 import TDTitle from "./../../components/TDTitle"
 import TDCombobox from "./../../components/TDCombobox"
-import { TDEditIcon, TDRemoveIcon, TDMarkCompleteIcon } from "./../../components/TDIcon" 
+import { TDEditIcon, TDRemoveIcon, TDMarkCompleteIcon, TDMarkUncompleteIcon } from "./../../components/TDIcon" 
 
 import moment from 'moment'
 
@@ -102,9 +102,14 @@ export default function Add() {
                                             highlightOverDue = 'text-rose-700' 
                                         }  
                                     }
+
+                                    let todoStyle = "uncomplete"
+                                    if (item.status === STATUS.COMPLETED) {
+                                        todoStyle = "complete"
+                                    }
                                     
                                     return (  
-                                            <tr key={ index } > 
+                                            <tr key={ index } className={  todoStyle } > 
                                                 <td> { item.id } </td>
                                                 <td> { item.job } </td>
                                                 <td> <span className="bg-green-800 p-2 rounded-lg text-white"> { item.type } </span> </td>
@@ -123,8 +128,12 @@ export default function Add() {
                                                             <TDRemoveIcon bgColor="#FFF" width="20"/>
                                                         </button>
                                                        
-                                                        <button className="success" onClick={ () => markCompleteFunc(index) }>   
-                                                            <TDMarkCompleteIcon bgColor="#FFF"  width="20"/>
+                                                        <button className="success" onClick={ () => markCompleteFunc(index) }>  
+                                                            { 
+                                                                item.status === STATUS.COMPLETED ? 
+                                                                    <TDMarkUncompleteIcon  bgColor="#FFF" width="20"/> :
+                                                                    <TDMarkCompleteIcon bgColor="#FFF" width="20"/>
+                                                            }
                                                         </button> 
                                                     </div>
                                                 </td> 

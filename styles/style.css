@@ -1,6 +1,4 @@
- 
-
-.table {
+ .table {
     @apply border border-gray-300 bg-gray-200 mx-auto
 }
 
@@ -55,4 +53,10 @@ button:hover.danger {
     @apply bg-rose-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
 }
 
- 
+.uncomplete {
+    @apply no-underline;
+}
+
+.complete { 
+    @apply line-through;
+}

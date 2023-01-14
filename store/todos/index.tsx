@@ -37,7 +37,13 @@ const store = (set, get) => ({
         let items = get().todos;
 
         let temp = { ...items[index] };
-        temp.status = STATUS.COMPLETED
+
+        if (temp.status === STATUS.COMPLETED) {
+            temp.status = STATUS.DOING
+        } else {
+            temp.status = STATUS.COMPLETED
+        }
+        
         items[index] = temp;
 
         set(state => ({
