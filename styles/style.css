@@ -3,11 +3,15 @@
 }
 
 .table tr th {
-    @apply text-orange-600
+    @apply text-white bg-orange-500
 }
 
 .table tr th, .table tr td {
     @apply p-[10px] border-[3px] border-gray-100
+}
+
+.table tbody tr:hover {
+    @apply bg-slate-300
 }
 
 input[type="text"], input[type="date"] {
@@ -53,10 +57,35 @@ button:hover.danger {
     @apply bg-rose-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
 }
 
+button.info {
+    @apply rounded-md p-2 bg-sky-500 text-white
+}
+
+button:hover.info { 
+    @apply bg-sky-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
+}
+  
+
 .uncomplete {
     @apply no-underline;
 }
 
 .complete { 
     @apply line-through;
+}
+
+.doing {
+    @apply text-white font-bold bg-sky-600 p-2
+}
+
+.done {
+    @apply text-white font-bold bg-green-700 p-2
+}
+
+.home {
+    @apply border-l-lime-600 border-l-4 mr-2 shadow-xl
+}
+
+.research {
+    @apply border-l-sky-500 border-l-4 mr-2  shadow-xl
 }

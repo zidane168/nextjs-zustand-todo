@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { IItem } from './../../utils/interface'
 import { STATUS } from './../../utils/contants'
+import moment from 'moment';
 
 interface ITodoState {
     id: string;
@@ -28,9 +29,14 @@ const store = (set, get) => ({
         {'name': 'Research', 'value': 'Research'},
     ],
 
-    addTodo: (item: ITodoState) => set(state => ({
-        todos: [...state.todos, item]
-    })),
+    addTodo: (item: ITodoState) => {
+        
+        item.status = STATUS.DOING
+        item.created = moment().format('YYYY-MM-DD')
+        set(state => ({
+            todos: [...state.todos, item]
+        }))        
+    },
 
     markCompleteTodo: (index: number) => {
 

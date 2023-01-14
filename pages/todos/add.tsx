@@ -83,6 +83,7 @@ export default function Add() {
                                 <th> Job </th> 
                                 <th> Type </th> 
                                 <th> Remark </th> 
+                                <th> Create Date </th> 
                                 <th> Due Date </th> 
                                 <th> Overdue </th>  
                                 <th> Status </th>  
@@ -104,19 +105,29 @@ export default function Add() {
                                     }
 
                                     let todoStyle = "uncomplete"
+                                    let buttonCompleteStyle = "info"
+                                    let statusStyle = "doing"
                                     if (item.status === STATUS.COMPLETED) {
                                         todoStyle = "complete"
+                                        statusStyle = "done"
+                                        buttonCompleteStyle = "success"
+                                    }
+
+                                    let typeStyle = "home"
+                                    if (item.type === "Research") {
+                                        typeStyle = "research"
                                     }
                                     
                                     return (  
-                                            <tr key={ index } className={  todoStyle } > 
+                                            <tr key={ index } className={ todoStyle } > 
                                                 <td> { item.id } </td>
                                                 <td> { item.job } </td>
-                                                <td> <span className="bg-green-800 p-2 rounded-lg text-white"> { item.type } </span> </td>
+                                                <td> <span className={ typeStyle }> </span> { item.type }  </td>
                                                 <td> { item.remark } </td>
+                                                <td> { item.created } </td>
                                                 <td> { item.dueDate }  </td> 
                                                 <td> <span className={ highlightOverDue }> { distance } </span> days! </td> 
-                                                <td> { item.status } </td> 
+                                                <td className={ statusStyle } > { item.status } </td> 
                                                 <td> 
                                                     <div className="flex space-x-2"> 
                                                     
@@ -128,7 +139,7 @@ export default function Add() {
                                                             <TDRemoveIcon bgColor="#FFF" width="20"/>
                                                         </button>
                                                        
-                                                        <button className="success" onClick={ () => markCompleteFunc(index) }>  
+                                                        <button className={ buttonCompleteStyle } onClick={ () => markCompleteFunc(index) }>  
                                                             { 
                                                                 item.status === STATUS.COMPLETED ? 
                                                                     <TDMarkUncompleteIcon  bgColor="#FFF" width="20"/> :
