@@ -89,3 +89,104 @@ button:hover.info {
 .research {
     @apply border-l-sky-500 border-l-4 mr-2  shadow-xl
 }
+
+
+/*Modal*/
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+    display: flex;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    /* -webkit-animation-name: zoomIn; 
+    -webkit-animation-duration: 0.4s;
+    animation-name: zoomIn;
+    animation-duration: 0.4s */
+
+    /* animation: zoomIn 0.4s linear; */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+
+    top: 30%;
+    left: 30%;
+    @apply fixed bg-[#fefefe] mx-auto rounded-xl
+    /* -webkit-animation-name: zoomIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: zoomIn;
+    animation-duration: 0.4s */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+  }
+  
+.modal-body {
+    @apply px-16 py-2  
+}
+   
+  
+  /* Add Animation */
+  @-webkit-keyframes zoomIn {
+    from {top: -200px; opacity: 0} 
+    to {top: 300px; opacity: 1}
+  }
+  @keyframes zoomIn {
+    from {top: -200px; opacity: 0} 
+    to {top: 300px; opacity: 1}
+  }
+  @-webkit-keyframes zoomOut {
+    from {top: 200px; opacity: 1} 
+    to {top: 0px; opacity: 0}
+  }
+  @keyframes zoomOut {
+    from {top: 200px; opacity: 1} 
+    to {top: 0px; opacity: 0}
+  }
+
+  /* @-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0} 
+    to {bottom: 0; opacity: 1}
+  } */
+  
+  /* @keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+  } */
+/*   
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+  } */
