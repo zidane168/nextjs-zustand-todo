@@ -10,8 +10,8 @@ interface IListItems {
 
 export default function TDCombobox( { is_required, label, placeHolder, items } : IListItems ) {
      
-    let required_attribute
-    let required_label
+    let required_attribute:any
+    let required_label:any
 
     if (is_required === true) {
         required_attribute = "required"
