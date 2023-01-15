@@ -1,192 +1,222 @@
  .table {
-    @apply border border-gray-300 bg-gray-200 mx-auto
-}
+   @apply border border-gray-300 bg-gray-200 mx-auto
+ }
 
-.table tr th {
-    @apply text-white bg-orange-500
-}
+ .table tr th {
+   @apply text-white bg-orange-500
+ }
 
-.table tr th, .table tr td {
-    @apply p-[10px] border-[3px] border-gray-100
-}
+ .table tr th,
+ .table tr td {
+   @apply p-[10px] border-[3px] border-gray-100
+ }
 
-.table tbody tr:hover {
-    @apply bg-slate-300
-}
+ .table tbody tr:hover {
+   @apply bg-slate-300
+ }
 
-input[type="text"], input[type="date"] {
-    @apply p-2 w-full rounded-md
-}
+ input[type="text"],
+ input[type="date"] {
+   @apply p-2 w-full rounded-md
+ }
 
-button {
-    @apply px-6 py-2 bg-orange-500 text-white rounded-md 
-}
+ button {
+   @apply px-6 py-2 bg-orange-500 text-white rounded-md
+ }
 
-button:hover { 
-    @apply bg-orange-600   transform-gpu transition transition-all duration-700 hover:scale-90; 
-}
+ button:hover {
+   @apply bg-orange-600 transform-gpu transition transition-all duration-700 hover:scale-90;
+ }
 
-.required-star {
-    @apply text-rose-600 font-bold
-}
-
-
-/* button by zidane */
-button.success {
-    @apply rounded-md p-2 bg-green-500  text-white
-}
-
-button:hover.success { 
-    @apply bg-green-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
-}
+ .required-star {
+   @apply text-rose-600 font-bold
+ }
 
 
-button.warning {
-    @apply rounded-md p-2 bg-yellow-500 text-white
-}
+ /* button by zidane */
+ button.success {
+   @apply rounded-md p-2 bg-green-500 text-white
+ }
 
-button:hover.warning { 
-    @apply bg-yellow-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
-}
-
-button.danger {
-    @apply rounded-md p-2 bg-rose-500  text-white
-}
-
-button:hover.danger { 
-    @apply bg-rose-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
-}
-
-button.info {
-    @apply rounded-md p-2 bg-sky-500 text-white
-}
-
-button:hover.info { 
-    @apply bg-sky-700  transform-gpu transition transition-all duration-700 hover:scale-90; 
-}
-  
-
-.uncomplete {
-    @apply no-underline;
-}
-
-.complete { 
-    @apply line-through;
-}
-
-.doing {
-    @apply text-white font-bold bg-sky-600 p-2
-}
-
-.done {
-    @apply text-white font-bold bg-green-700 p-2
-}
-
-.home {
-    @apply border-l-lime-600 border-l-4 mr-2 shadow-xl
-}
-
-.research {
-    @apply border-l-sky-500 border-l-4 mr-2  shadow-xl
-}
+ button:hover.success {
+   @apply bg-green-700 transform-gpu transition transition-all duration-700 hover:scale-90;
+ }
 
 
-/*Modal*/
+ button.warning {
+   @apply rounded-md p-2 bg-yellow-500 text-white
+ }
 
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    
-    left:0;
-    top:0;
-    right:0;
-    bottom:0;
-    display: flex;
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    /* -webkit-animation-name: zoomIn; 
-    -webkit-animation-duration: 0.4s;
-    animation-name: zoomIn;
-    animation-duration: 0.4s */
+ button:hover.warning {
+   @apply bg-yellow-700 transform-gpu transition transition-all duration-700 hover:scale-90;
+ }
 
-    /* animation: zoomIn 0.4s linear; */
-  }
-  
-  /* Modal Content */
-  .modal-content {
+ button.danger {
+   @apply rounded-md p-2 bg-rose-500 text-white
+ }
 
-    top: 30%;
-    left: 30%;
-    @apply fixed bg-[#fefefe] mx-auto rounded-xl
-    /* -webkit-animation-name: zoomIn;
-    -webkit-animation-duration: 0.4s;
-    animation-name: zoomIn;
-    animation-duration: 0.4s */
-  }
-  
-  /* The Close Button */
-  .close {
-    color: white;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  .modal-header {
-    padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
-  }
-  
-.modal-body {
-    @apply px-16 py-2  
-}
+ button:hover.danger {
+   @apply bg-rose-700 transform-gpu transition transition-all duration-700 hover:scale-90;
+ }
+
+ button.info {
+   @apply rounded-md p-2 bg-sky-500 text-white
+ }
+
+ button:hover.info {
+   @apply bg-sky-700 transform-gpu transition transition-all duration-700 hover:scale-90;
+ }
+
+
+ .uncomplete {
+   @apply no-underline;
+ }
+
+ .complete {
+   @apply line-through;
+ }
+
+ .doing {
+   @apply text-white font-bold bg-sky-600 p-2
+ }
+
+ .done {
+   @apply text-white font-bold bg-green-700 p-2
+ }
+
+ .home {
+   @apply border-l-lime-600 border-l-4 mr-2 shadow-xl
+ }
+
+ .research {
+   @apply border-l-sky-500 border-l-4 mr-2 shadow-xl
+ }
+
+
+ /*Modal*/
+
+ /* The Modal (background) */
+ .modal {
+   display: none;
+   /* Hidden by default */
+   position: fixed;
+   /* Stay in place */
+   z-index: 1;
+   /* Sit on top */
+
+   left: 0;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   display: flex;
+   overflow: auto;
+   /* Enable scroll if needed */
+   background-color: rgb(0, 0, 0);
+   /* Fallback color */
+   background-color: rgba(0, 0, 0, 0.4);
+   /* Black w/ opacity */
+   /* -webkit-animation-name: scaleIn; animation put here will cause background scale not good */
+
+ }
+
+ /* Modal Content */
+ .modal-content {
+
+   right: 20px;
+   bottom: 20px;
+   @apply fixed bg-[#fefefe] mx-auto rounded-xl;
    
-  
-  /* Add Animation */
-  @-webkit-keyframes zoomIn {
-    from {top: -200px; opacity: 0} 
-    to {top: 300px; opacity: 1}
-  }
-  @keyframes zoomIn {
-    from {top: -200px; opacity: 0} 
-    to {top: 300px; opacity: 1}
-  }
-  @-webkit-keyframes zoomOut {
-    from {top: 200px; opacity: 1} 
-    to {top: 0px; opacity: 0}
-  }
-  @keyframes zoomOut {
-    from {top: 200px; opacity: 1} 
-    to {top: 0px; opacity: 0}
-  }
+   /* animation put here will not cause background scale, very good */
+   -webkit-animation-name: scaleIn;
+   -webkit-animation-duration: 0.4s;
+   animation-name: scaleIn;
+   animation-duration: 0.4s
+ }
 
-  /* @-webkit-keyframes slideIn {
-    from {bottom: -300px; opacity: 0} 
-    to {bottom: 0; opacity: 1}
-  } */
-  
-  /* @keyframes slideIn {
-    from {bottom: -300px; opacity: 0}
-    to {bottom: 0; opacity: 1}
-  } */
-/*   
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0} 
-    to {opacity: 1}
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0} 
-    to {opacity: 1}
-  } */
+ /* The Close Button */
+ .close {
+   color: white;
+   font-size: 28px;
+   font-weight: bold;
+
+ }
+
+ .close:hover,
+ .close:focus {
+   color: #000;
+   text-decoration: none;
+   cursor: pointer;
+ }
+
+ .modal-header {
+   @apply px-4 py-[15px] bg-sky-500 text-white flex items-center justify-between;
+ }
+
+ .modal-body {
+   @apply px-16 py-2
+ }
+
+ .close-modal {
+  -webkit-animation-name: scaleOut;
+   -webkit-animation-duration: 0.4s;
+   animation-name: scaleOut;
+   animation-duration: 0.4
+ }
+
+ /* Add Animation */
+
+ @-webkit-keyframes scaleIn {
+   from {
+     opacity: 0;
+     transform: scale(0);
+     right: 20px;
+     bottom: 20px;
+   }
+
+   to {
+     opacity: 1;
+     transform: scale(1);
+   }
+ }
+
+ @keyframes scaleIn {
+   from {
+     opacity: 0;
+     transform: scale(0);
+     right: 20px;
+     bottom: 20px;
+   }
+
+   to {
+     opacity: 1;
+     transform: scale(1);
+   }
+ }
+
+ @-webkit-keyframes scaleOut {
+   from {
+     opacity: 1;
+     transform: scale(1);
+   }
+
+   to {
+     opacity: 0;
+     transform: scale(0);
+     right: 20px;
+     bottom: 20px;
+   }
+ }
+
+ @keyframes scaleOut {
+   from {
+     opacity: 1;
+     transform: scale(1);
+   }
+
+   to {
+     opacity: 0;
+     transform: scale(0);
+     right: 20px;
+     bottom: 20px;
+   }
+ }
