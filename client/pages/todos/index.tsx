@@ -35,8 +35,14 @@ export default function Add() {
   }, [])    // call 1 time 
 
   const closeAddForm = () => {
-    let modal = document.getElementById("addModal");   
+    let modal = document.getElementById("addModal");    
     modal.style.display = "none";  
+    
+    // let modalChildren = document.getElementById("modal-content");  
+    // modalChildren.classList.add('close-modal-content')
+    // modal.classList.add('close-modal')
+    
+     
   };
 
   const openAddForm = () => {
@@ -173,7 +179,7 @@ export default function Add() {
 
 
         <div id="addModal" className="modal">
-            <div className="modal-content">
+            <div className="modal-content" id="modal-content">
               <div className="modal-header">
                   <h2>Add Items</h2>
                   <span className="close" onClick={() => closeAddForm()}>

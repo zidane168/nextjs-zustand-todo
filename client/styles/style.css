@@ -155,12 +155,21 @@
  .modal-body {
    @apply px-16 py-2
  }
-
- .close-modal {
+/* 
+ .close-modal-content {
   -webkit-animation-name: scaleOut;
    -webkit-animation-duration: 0.4s;
    animation-name: scaleOut;
    animation-duration: 0.4
+ } */
+
+ .close-modal {  
+  /* transition: all 0.4s linear;  
+  display: none; */
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  transition: all .5s ease;
+  
  }
 
  /* Add Animation */
@@ -192,6 +201,8 @@
      transform: scale(1);
    }
  }
+
+
 
  @-webkit-keyframes scaleOut {
    from {
