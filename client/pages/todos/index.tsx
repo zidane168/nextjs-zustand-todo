@@ -24,10 +24,10 @@ export default function Add() {
   const { todos, types, addTodo, removeTodo, markCompleteTodo } = useTodoStore();
   const today = moment().format("YYYY-MM-DD");
 
-  const id = useRef();
-  const job = useRef();
-  const dueDate = useRef();
-  const remark = useRef();
+  const id = useRef<any>();
+  const job = useRef<any>();
+  const dueDate = useRef<any>();
+  const remark = useRef<any>();
 
 
   useEffect(() => {
@@ -61,16 +61,16 @@ export default function Add() {
 
   const add = () => {
     let item:ITodoState = {
-      id: id?.current?.['value'] ? id?.current?.['value'] : ' ',
-      job: job?.current?.['value'] ? job?.current?.['value'] : ' ',
+      id: id?.current?.value ? id?.current?.value as string : ' ',
+      job: job?.current?.value ? job?.current?.value as string : ' ',
       type: (document.getElementById("Type") as HTMLInputElement).value,
-      dueDate: dueDate?.current?.['value'] ?  (dueDate?.current?.['value'])  :'',
-      remark: remark?.current?.['value'] ? remark?.current?.['value'] : '',
+      dueDate: dueDate?.current?.value ?  (dueDate?.current?.['value']) as string :'',
+      remark: remark?.current?.value ? remark?.current?.value as string : '',
     };
     addTodo(item);
   };
 
-  const markCompleteFunc = (index: string) => {
+  const markCompleteFunc = (index: number) => {
     markCompleteTodo(index);
   };
 
@@ -160,7 +160,7 @@ export default function Add() {
 
                           <button
                             className={buttonCompleteStyle}
-                            onClick={() => markCompleteFunc(index.toString())}
+                            onClick={() => markCompleteFunc(index)}
                           >
                             {item.status === STATUS.COMPLETED ? (
                               <TDMarkUncompleteIcon bgColor="#FFF" width={ 20 } />
@@ -199,7 +199,7 @@ export default function Add() {
                       <span className="required-star"> * </span> ID: 
                       </label>
                       <input
-                        ref={id}
+                        ref={ ref => id.current = ref }
                         required
                         type="text"
                         name="id"
@@ -213,7 +213,7 @@ export default function Add() {
                       <span className="required-star"> * </span> Job Name:{" "}
                       </label>
                       <input
-                      ref={job}
+                      ref={ ref => job.current = ref }
                       required
                       type="text"
                       name="job"
@@ -229,8 +229,7 @@ export default function Add() {
                       />
                   </div>
                   <div className="mt-4">
-                      <label>
-                      {" "}
+                      <label> 
                       <span className="required-star"> * </span> Due Date:{" "}
                       </label>
                       <input
@@ -244,7 +243,7 @@ export default function Add() {
                   <div className="mt-4">
                       <label> Remark: </label>
                       <input
-                      ref={remark}
+                      ref={ ref => remark.current = ref }
                       type="text"
                       name="text"
                       placeholder="Please focus, Try your best, go ahead"

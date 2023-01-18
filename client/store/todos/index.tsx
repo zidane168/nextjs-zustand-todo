@@ -10,11 +10,11 @@ interface IListTodoState {
     todos: Array<ITodoState>;
     types: Array<IItem>;
     addTodo: (item: ITodoState) => void;
-    markCompleteTodo: (id: string) => void;
+    markCompleteTodo: (id: number) => void;
     removeTodo: (id: string) => void;
 }
   
-const store = (set, get) => ({
+const store = (set:any, get:any) => ({
     todos: [],
     types: [
         {'name': 'Home', 'value': 'Home'},
@@ -25,7 +25,7 @@ const store = (set, get) => ({
         
         item.status = STATUS.DOING
         item.created = moment().format('YYYY-MM-DD')
-        set(state => ({
+        set((state: { todos: Array<ITodoState> }) => ({
             todos: [...state.todos, item]
         }))        
     },
@@ -44,7 +44,7 @@ const store = (set, get) => ({
         
         items[index] = temp;
 
-        set(state => ({
+        set(() => ({
             todos: items
         })) 
     },
@@ -52,15 +52,16 @@ const store = (set, get) => ({
     removeTodo: (id: string) => {
         let items = get().todos
 
-        items = items.filter( (item, _) => {
+        items = items.filter( (item: ITodoState) => {
             return item.id != id
         }) 
 
-        set(state => ({
+        set(() => ({
             todos: items
         }))
     }
 })
-const useStore = create<IListTodoState>(devtools(store))
+// const useStore = create<IListTodoState>(devtools(store))
+const useStore = create<IListTodoState>(store)
 
 export default useStore
