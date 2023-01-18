@@ -7,6 +7,8 @@ import TDHeader from "./../../components/TDHeader";
 import TDFooter from "./../../components/TDFooter";
 import TDTitle from "./../../components/TDTitle";
 import TDCombobox from "./../../components/TDCombobox";
+import { ITodoState } from './../../utils/interface'
+
 import {
   TDEditIcon,
   TDRemoveIcon,
@@ -19,8 +21,7 @@ import moment from "moment";
 import { STATUS } from "./../../utils/contants";
 
 export default function Add() {
-  const { todos, types, addTodo, removeTodo, markCompleteTodo } =
-    useTodoStore();
+  const { todos, types, addTodo, removeTodo, markCompleteTodo } = useTodoStore();
   const today = moment().format("YYYY-MM-DD");
 
   const id = useRef();
@@ -31,12 +32,18 @@ export default function Add() {
 
   useEffect(() => {
     let modal = document.getElementById("addModal");
-    modal.style.display = "none";
+
+    if (modal) {
+      modal.style.display = "none";
+    }
+  
   }, [])    // call 1 time 
 
   const closeAddForm = () => {
     let modal = document.getElementById("addModal");    
-    modal.style.display = "none";  
+    if (modal) {
+      modal.style.display = "none";
+    }
     
     // let modalChildren = document.getElementById("modal-content");  
     // modalChildren.classList.add('close-modal-content')
@@ -47,21 +54,23 @@ export default function Add() {
 
   const openAddForm = () => {
     let modal = document.getElementById("addModal");
-    modal.style.display = "block";
+    if (modal) {
+      modal.style.display = "block";
+    }
   };
 
   const add = () => {
-    let item = {
-      id: id.current.value,
-      job: job.current.value,
-      type: document.getElementById("Type").value,
-      dueDate: dueDate.current.value,
-      remark: remark.current.value,
+    let item:ITodoState = {
+      id: id?.current?.['value'] ? id?.current?.['value'] : ' ',
+      job: job?.current?.['value'] ? job?.current?.['value'] : ' ',
+      type: (document.getElementById("Type") as HTMLInputElement).value,
+      dueDate: dueDate?.current?.['value'] ?  (dueDate?.current?.['value'])  :'',
+      remark: remark?.current?.['value'] ? remark?.current?.['value'] : '',
     };
     addTodo(item);
   };
 
-  const markCompleteFunc = (index: number) => {
+  const markCompleteFunc = (index: string) => {
     markCompleteTodo(index);
   };
 
@@ -123,43 +132,40 @@ export default function Add() {
                     <tr key={index} className={todoStyle}>
                       <td> {item.id} </td>
                       <td> {item.job} </td>
-                      <td>
-                        {" "}
-                        <span className={typeStyle}> </span> {item.type}{" "}
+                      <td> 
+                        <span className={typeStyle}> </span> {item.type} 
                       </td>
-                      <td> {item.remark} </td>
-                      <td> {item.created} </td>
+                      <td> {item.remark} </td> 
+                      <td> {item.created} </td> 
                       <td> {item.dueDate} </td>
-                      <td>
-                        {" "}
-                        <span className={highlightOverDue}>
-                          {" "}
-                          {distance}{" "}
-                        </span>{" "}
-                        days!{" "}
+                      <td> 
+                        <span className={highlightOverDue}> 
+                          {distance} 
+                        </span> 
+                        days! 
                       </td>
                       <td className={statusStyle}> {item.status} </td>
                       <td>
                         <div className="flex space-x-2">
                           <button className="warning ">
-                            <TDEditIcon bgColor="#FFF" width="20" />
+                            <TDEditIcon bgColor="#FFF" width={ 20 } />
                           </button>
 
                           <button
                             className="danger"
                             onClick={() => removeTodo(item.id)}
                           >
-                            <TDRemoveIcon bgColor="#FFF" width="20" />
+                            <TDRemoveIcon bgColor="#FFF"  width={ 20 } />
                           </button>
 
                           <button
                             className={buttonCompleteStyle}
-                            onClick={() => markCompleteFunc(index)}
+                            onClick={() => markCompleteFunc(index.toString())}
                           >
                             {item.status === STATUS.COMPLETED ? (
-                              <TDMarkUncompleteIcon bgColor="#FFF" width="20" />
+                              <TDMarkUncompleteIcon bgColor="#FFF" width={ 20 } />
                             ) : (
-                              <TDMarkCompleteIcon bgColor="#FFF" width="20" />
+                              <TDMarkCompleteIcon bgColor="#FFF"  width={ 20 } />
                             )}
                           </button>
                         </div>
@@ -189,16 +195,15 @@ export default function Add() {
               <div className="modal-body">
                   <div className="bg-sky-300 shadow-lg p-4 container w-[500px] mx-auto rounded-md">
                   <div>
-                      <label>
-                      {" "}
-                      <span className="required-star"> * </span> ID:{" "}
+                      <label> 
+                      <span className="required-star"> * </span> ID: 
                       </label>
                       <input
-                      ref={id}
-                      required
-                      type="text"
-                      name="id"
-                      placeholder="1"
+                        ref={id}
+                        required
+                        type="text"
+                        name="id"
+                        placeholder="1"
                       />
                   </div>
 

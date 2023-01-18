@@ -1,25 +1,17 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
-import { IItem } from './../../utils/interface'
+import { IItem, ITodoState } from './../../utils/interface'
 import { STATUS } from './../../utils/contants'
 import moment from 'moment';
 
-interface ITodoState {
-    id: string;
-    job: string;
-    type: string; 
-    remark: string;
-    dueDate: Date;
-    status: STATUS.DOING;
-    created: Date;
-}
+
 
 interface IListTodoState {
     todos: Array<ITodoState>;
     types: Array<IItem>;
-    addTodo: () => void;
-    markCompleteTodo: (id: number) => void;
-    removeTodo: (id: number) => void;
+    addTodo: (item: ITodoState) => void;
+    markCompleteTodo: (id: string) => void;
+    removeTodo: (id: string) => void;
 }
   
 const store = (set, get) => ({

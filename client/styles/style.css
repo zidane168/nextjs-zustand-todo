@@ -67,7 +67,6 @@
    @apply bg-sky-700 transform-gpu transition transition-all duration-700 hover:scale-90;
  }
 
-
  .uncomplete {
    @apply no-underline;
  }

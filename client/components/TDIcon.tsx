@@ -7,7 +7,7 @@ export const TDMarkUncompleteIcon = ({ bgColor, width }: IConAttribute) => {
   return (
     <>
       <svg
-        fillstyle="enable-background:new 0 0 50 50;"
+        
         version="1.1"
         viewBox="0 0 50 50"
         width={width}
@@ -82,8 +82,7 @@ export const TDRemoveIcon = ({ bgColor, width }: IConAttribute) => {
     <>
       <svg
         width={width} // them width height moi co the hien thi dc
-        height={width}
-        fillstyle="enable-background:new 0 0 24 24;"
+        height={width} 
         version="1.1"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
