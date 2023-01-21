@@ -17,7 +17,7 @@ export default function TDHeader() {
                 </div>
             </div>
             <div className="flex">
-                <div> Welcome: abc</div>
+                <div> Welcome: zidane - Learn Tech Tips</div>
             </div>
         </div>
     )
