@@ -1,40 +1,63 @@
-import { Injectable } from '@nestjs/common';
+import { IUser } from './interface/users.interface';
+import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto'; 
-
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Users } from './entities/user.entity';
-import { getMongoManager } from "typeorm"
+import { Model } from 'mongoose';
+import { UsersDto } from './dto/users.dto';
 
 @Injectable()
-export class UsersService { 
+export class UsersService {
+  constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
 
-  constructor(
-    @InjectRepository(Users) private usersRepository: Repository<Users>,
-  ) {}
+  public async getUsers(): Promise<UsersDto[]> {
+    const users = await this.userModel.find().exec();
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    if (!users || !users[0]) {
+      throw new HttpException('Not Found', 404);
+    }
+    return users;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  public async register(newUser: UsersDto) {
+    const user = await this.userModel(newUser);
+    return user.save();
   }
 
-  async findOne(username: string):  Promise<any | undefined>{
- 
-    return await getMongoManager().findOneBy(Users, {
-      username: "username",
-    });
+  public async getUserById(id: number): Promise<UsersDto> {
+    const user = await this.userModel.findOne({ id }).exec();
+
+    if (!user || !user[0]) {
+      throw new HttpException('Not found', 404);
+    }
+
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  public async deleteUserById(id: number): Promise<UsersDto> {
+    const user = await this.userModel.deleteOne({ id }).exec();
+    if (user.deleteCount === 0) {
+      throw new HttpException('Not Found', 404);
+    }
+
+    return user;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  public async putUserById(
+    id: number,
+    propertyName: string,
+    propertyValue: string,
+  ): Promise<UsersDto> {
+    const user = await this.userModel
+      .findOneAndUpdate(
+        { id },
+        {
+          [propertyName]: [propertyValue],
+        },
+      )
+      .exec();
+
+    if (!user) {
+      throw new HttpException('Not Found', 404);
+    }
+    return user;
   }
 }
