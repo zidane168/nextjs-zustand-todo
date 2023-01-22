@@ -1,5 +1,3 @@
-eal; // https://www.youtube.com/watch?v=L3JZhj9Odfg&t=1233s
-
 import {
   Controller,
   Get,
@@ -18,61 +16,36 @@ import { UsersDto } from './dto/users.dto';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+ 
 
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.usersService.create(createUserDto);
-  // }
-
-  // @Get()
-  // findAll() {
-  //   return this.usersService.findAll();
-  // }
-
-  // @Get(':username')
-  // async findOne(@Param('username') username: string) {
-  //   const result = await this.usersService.findOne(username);
-
-  //   return new ApiSucceedResponse('message: ', result)
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(+id, updateUserDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.usersService.remove(+id);
-  // }
-
-  public async getUsers(): Promise<UsersDto[]> {
+  @Get()
+  public async getUsers(): Promise<any> {
     const users = await this.usersService.getUsers();
-    return new ApiSucceedResponse('Users: ', users);
+    return new ApiSucceedResponse('Retrieved data successfully: ', users);
   }
 
   @Post()
   public async register(newUser: UsersDto) {
     const user = await this.usersService.register(newUser);
-    return new ApiSucceedResponse('User', user);
+    return new ApiSucceedResponse('Register data successfully', user);
   }
 
   @Get(':id')
-  public async getUserById(id: number): Promise<UsersDto> {
+  public async getUserById(id: number): Promise<any> {
     const user = await this.usersService.getUserById(id);
-    return new ApiSucceedResponse('User', user);
+    return new ApiSucceedResponse('Retrieved data successfully', user);
   }
 
-  public async deleteUserById(id: number): Promise<UsersDto> {
+  public async deleteUserById(id: number): Promise<any> {
     const user = await this.usersService.deleteUserById(id);
-    return new ApiSucceedResponse('User', user);
+    return new ApiSucceedResponse('Deleted data successfully', user);
   }
 
   public async putUserById(
     id: number,
     propertyName: string,
     propertyValue: string,
-  ): Promise<UsersDto> {
+  ): Promise<any> {
     const user = await this.usersService.putUserById(
       id,
       propertyName,

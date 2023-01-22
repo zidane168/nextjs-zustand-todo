@@ -8,17 +8,18 @@ import { UsersDto } from './dto/users.dto';
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
 
+  // http://localhost:8000/users => ok
   public async getUsers(): Promise<UsersDto[]> {
     const users = await this.userModel.find().exec();
 
     if (!users || !users[0]) {
-      throw new HttpException('Not Found', 404);
+      throw new HttpException('User Not Found', 404);
     }
     return users;
   }
 
   public async register(newUser: UsersDto) {
-    const user = await this.userModel(newUser);
+    const user = await new this.userModel(newUser);
     return user.save();
   }
 
@@ -32,12 +33,12 @@ export class UsersService {
     return user;
   }
 
-  public async deleteUserById(id: number): Promise<UsersDto> {
+  public async deleteUserById(id: number): Promise<any> {
     const user = await this.userModel.deleteOne({ id }).exec();
-    if (user.deletedCount === 0) {
+    if (user.deletedCount === 0) {      
       throw new HttpException('Not Found', 404);
     }
-    return user;
+    return true;
   }
 
   public async putUserById(
