@@ -34,10 +34,9 @@ export class UsersService {
 
   public async deleteUserById(id: number): Promise<UsersDto> {
     const user = await this.userModel.deleteOne({ id }).exec();
-    if (user.deleteCount === 0) {
+    if (user.deletedCount === 0) {
       throw new HttpException('Not Found', 404);
     }
-
     return user;
   }
 

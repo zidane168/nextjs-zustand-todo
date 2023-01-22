@@ -1,28 +1,28 @@
 import {
-    ArgumentsHost,
-    Catch,
-    ExceptionFilter,
-    HttpException,
-  } from '@nestjs/common';
-  
-  @Catch(HttpException)
-  export class HttpExceptionFilter implements ExceptionFilter<HttpException> {
-    catch(exception: HttpException, host: ArgumentsHost) {
-      const ctx = host.switchToHttp();
-      const response = ctx.getResponse();
-      const request = ctx.getRequest();
-      const statusCode = exception.getStatus();
-      let message = "";
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+} from '@nestjs/common';
 
-      if (statusCode === 401) {
-        message = "User Unauthorized!"
-      }
-  
-      response.status(statusCode).json({
-        statusCode,
-        message,
-        timestamp: new Date().toISOString(),
-        path: request.url,
-      });
+@Catch(HttpException)
+export class HttpExceptionFilter implements ExceptionFilter<HttpException> {
+  catch(exception: HttpException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse();
+    const request = ctx.getRequest();
+    const statusCode = exception.getStatus();
+    let message = '';
+
+    if (statusCode === 401) {
+      message = 'User Unauthorized!';
     }
+
+    response.status(statusCode).json({
+      statusCode,
+      message,
+      timestamp: new Date().toISOString(),
+      path: request.url,
+    });
   }
+}

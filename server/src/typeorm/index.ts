@@ -1,7 +1,6 @@
- 
-import { Users } from './../users/entities/user.entity'; 
+import { Users } from './../users/entities/user.entity';
 
-const entities = [  Users ];
+const entities = [Users];
 
 export { Users };
 
