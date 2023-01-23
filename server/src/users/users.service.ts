@@ -3,7 +3,7 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UsersDto } from './dto/users.dto';
-
+import * as bcrypt from 'bcrypt'
 @Injectable()
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
@@ -18,9 +18,38 @@ export class UsersService {
     return users;
   }
 
+  public async login(user: UsersDto) {
+
+    const salt = bcrypt.genSalt(); 
+    const result = await this.userModel.findOne({
+      username: user.username
+    });
+
+    if (!result) {
+      return null;
+    }
+   
+    const isMatch = await bcrypt.compare(user.password, result.password);
+    if (!isMatch) {
+      return null;
+    }
+
+    return result;
+  }
+
   public async register(newUser: UsersDto) {
+
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(newUser.password, salt)
+
+    newUser.password = hashPassword;
     const user = await new this.userModel(newUser);
     return user.save();
+  }
+
+  async validate(id: number) {
+    const user = await this.getUserById(id);
+    return user ? user : null;
   }
 
   public async getUserById(id: number): Promise<UsersDto> {
@@ -35,7 +64,7 @@ export class UsersService {
 
   public async deleteUserById(id: number): Promise<any> {
     const user = await this.userModel.deleteOne({ id }).exec();
-    if (user.deletedCount === 0) {      
+    if (user.deletedCount === 0) {
       throw new HttpException('Not Found', 404);
     }
     return true;
