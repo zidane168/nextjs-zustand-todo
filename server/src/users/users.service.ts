@@ -3,7 +3,7 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UsersDto } from './dto/users.dto';
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
@@ -19,16 +19,15 @@ export class UsersService {
   }
 
   public async login(user: UsersDto) {
-
-    const salt = bcrypt.genSalt(); 
+    const salt = bcrypt.genSalt();
     const result = await this.userModel.findOne({
-      username: user.username
+      username: user.username,
     });
 
     if (!result) {
       return null;
     }
-   
+
     const isMatch = await bcrypt.compare(user.password, result.password);
     if (!isMatch) {
       return null;
@@ -38,9 +37,8 @@ export class UsersService {
   }
 
   public async register(newUser: UsersDto) {
-
     const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(newUser.password, salt)
+    const hashPassword = await bcrypt.hash(newUser.password, salt);
 
     newUser.password = hashPassword;
     const user = await new this.userModel(newUser);

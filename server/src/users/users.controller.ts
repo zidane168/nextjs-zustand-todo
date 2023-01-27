@@ -18,9 +18,7 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    
   ) {}
-
 
   @Get()
   public async getUsers(): Promise<any> {
@@ -29,13 +27,13 @@ export class UsersController {
   }
 
   @Post('login')
-  public async login(@Body() user: UsersDto) { 
-    const result:UsersDto = await this.usersService.login(user); 
-    
+  public async login(@Body() user: UsersDto) {
+    const result: UsersDto = await this.usersService.login(user);
+
     if (result) {
       let access_token = await this.jwtService.sign({ id: result._id });
- 
-      console.log(access_token)
+
+      console.log(access_token);
       return new ApiSucceedResponse('Login succeed', access_token);
     }
 

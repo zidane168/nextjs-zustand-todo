@@ -6,7 +6,7 @@ import { UsersSchema } from './schemas/users.schema';
 
 import { jwtConstants } from 'src/auth/constants';
 import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport'; 
+import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/auth/jwt.strategy';
 
 @Module({
@@ -23,8 +23,8 @@ import { JwtStrategy } from 'src/auth/jwt.strategy';
       secret: jwtConstants.secret,
       signOptions: {
         expiresIn: '3600s',
-      }
-    })
+      },
+    }),
   ],
   controllers: [UsersController],
   providers: [UsersService, JwtStrategy],
