@@ -1,5 +1,3 @@
-
-import { TodosSchema } from './schemas/todos.schema';
 import { TodosDto } from './dto/todos.dto';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -38,7 +36,7 @@ export class TodosService {
     return new ApiErrorResponse('Data is not saved', []);
   }
 
-  public async markCompleteTodo(id: string) {
+  public async changeStatusTodo(id: string) {
     const todo = await this.todoModel
       .findById({
         _id: new Types.ObjectId(id),
@@ -54,6 +52,20 @@ export class TodosService {
     } else {
       todo.status = 'COMPLETED';
     }
+
+    await this.todoModel
+      .updateOne(
+        {
+          _id: new Types.ObjectId(id),
+        },
+        todo,
+      )
+      .exec();
+
+    return new ApiSucceedResponse(
+      'Todo was succeed changed status to: ' + todo.status,
+      [],
+    );
   }
 
   public async getTodoById(id: string) {
@@ -77,6 +89,6 @@ export class TodosService {
       throw new HttpException('Todo Not Found', 404);
     }
 
-    return new ApiSucceedResponse("Todo is deleted", []);
+    return new ApiSucceedResponse('Todo is deleted', []);
   }
 }

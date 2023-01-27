@@ -3,7 +3,7 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model, Types } from 'mongoose';
 import { UsersDto } from './dto/users.dto';
-import * as bcrypt from 'bcrypt'; 
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
@@ -18,7 +18,7 @@ export class UsersService {
     return users;
   }
 
-  public async login(user: UsersDto) { 
+  public async login(user: UsersDto) {
     const result = await this.userModel.findOne({
       username: user.username,
     });
@@ -50,11 +50,10 @@ export class UsersService {
   }
 
   public async getUserById(id: string): Promise<UsersDto> {
-   
     const user = await this.userModel
-      .findById({ _id: new mongoose.Types.ObjectId(id) })   // use this way for get mongo objectID
-      .exec(); 
-  
+      .findById({ _id: new mongoose.Types.ObjectId(id) }) // use this way for get mongo objectID
+      .exec();
+
     if (!user) {
       throw new HttpException('Not found*!!', 404);
     }

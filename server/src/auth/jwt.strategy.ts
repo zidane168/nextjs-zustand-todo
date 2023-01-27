@@ -4,11 +4,10 @@ import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { jwtConstants } from './constants';
 
-
 export interface IJWT {
-  id: string, 
-  iat: number, 
-  exp: number
+  id: string;
+  iat: number;
+  exp: number;
 }
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -21,9 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-
-  async validate( input: IJWT ): Promise<any> {
- 
+  async validate(input: IJWT): Promise<any> {
     const user = await this.usersService.validate(input.id);
     if (!user) {
       throw new HttpException('Unauthorized Access', HttpStatus.UNAUTHORIZED);

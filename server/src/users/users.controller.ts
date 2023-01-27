@@ -1,14 +1,9 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body
-} from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtService } from '@nestjs/jwt';
 import { ApiErrorResponse } from 'src/util/api-error-response.util';
 import { ApiSucceedResponse } from 'src/util/api-success-response.util';
-import { UsersDto } from './dto/users.dto'; 
+import { UsersDto } from './dto/users.dto';
 
 @Controller('users')
 export class UsersController {
@@ -25,10 +20,10 @@ export class UsersController {
 
   @Post('login')
   public async login(@Body() user: UsersDto) {
-    const result: UsersDto = await this.usersService.login(user); 
+    const result: UsersDto = await this.usersService.login(user);
 
     if (result) {
-      let access_token = await this.jwtService.sign({ id: result._id }); 
+      let access_token = await this.jwtService.sign({ id: result._id });
       return new ApiSucceedResponse('Login succeed', access_token);
     }
 
