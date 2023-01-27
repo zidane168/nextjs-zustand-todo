@@ -21,37 +21,40 @@ export class TodosService {
     return todos;
   }
 
-  public async create(newTodo: TodosDto) {
-    newTodo.createDate = moment().format('YYYY-MM-DD');
-    newTodo.status = "DOING"
-    const newTodo = await new this.todoModel(newTodo)
-    return newTodo.save();
+  public async create(todo: TodosDto) {
+    todo.createDate = moment().toDate();
+    todo.status = 'DOING';
+    const todoModel = await new this.todoModel(todo);
+    return todoModel.save();
   }
 
   public async markCompleteTodo(id: Number) {
-    const todo = await this.todoModel.findById({
-      id: id
-    }).exec()
+    let todo = await this.todoModel
+      .findById({
+        id: id,
+      })
+      .exec();
 
     if (!todo) {
-      throw new HttpException("Todo Not Found", 404);
+      throw new HttpException('Todo Not Found', 404);
     }
 
-    if (todo.status === "COMPLETED") {
-      todo.status = "DOING"
-
+    if (todo.status === 'COMPLETED') {
+      todo.status = 'DOING';
     } else {
-      todo.status = "COMPLETED"
+      todo.status = 'COMPLETED';
     }
   }
 
   public async removeTodo(id: Number) {
-    const todo = await this.todoModel.deleteOne({
-      id: id
-    }).exec()
+    const todo = await this.todoModel
+      .deleteOne({
+        id: id,
+      })
+      .exec();
 
     if (todo.deletedCount === 0) {
-      throw new HttpException("Todo Not Found", 404);
+      throw new HttpException('Todo Not Found', 404);
     }
 
     return true;

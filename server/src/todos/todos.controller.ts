@@ -1,4 +1,4 @@
-import { todosDto } from './dto/todos.dto';
+import { TodosDto } from './dto/todos.dto';
 import {
   Controller,
   Get,
@@ -19,7 +19,7 @@ export class TodosController {
   @Get()
   public async get(username: string): Promise<any> {
     const todos = await this.todosService.get(username);
-    return new ApiSucceedResponse('Retrieved data successfully', todos)
+    return new ApiSucceedResponse('Retrieved data successfully', todos);
   }
 
   @Post()

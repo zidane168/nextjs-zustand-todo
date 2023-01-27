@@ -9,7 +9,7 @@ import { TodosSchema } from './schemas/todos.schema';
     MongooseModule.forFeature([
       {
         name: 'Todo',
-        schema: TodoSchema,
+        schema: TodosSchema,
       },
     ]),
   ],
