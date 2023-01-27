@@ -6,7 +6,7 @@ export const loginMember = async(
     username: string,
     password: string
 ) => {
-    let url = `${envConfig.API_PATH}/login`
+    let url = `${envConfig.API_PATH}/users/login`
 
     try {
         const response = await request({

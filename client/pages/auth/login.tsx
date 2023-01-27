@@ -15,7 +15,10 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({
+    isError: false,
+    msg: "Success",
+  });
 
   const router = useRouter();
 
@@ -26,22 +29,26 @@ export default function Login() {
 
   const handleLoginWithCredential = async (e) => {
     e?.preventDefault();
-    signIn("credentials", {
+
+    // call api/auth/[...nextauth].ts
+    signIn("credentials", {     
       redirect: false,
       username: username,
       password: password,
     })
-      .then((error) => {
-        if (!error.error) {
+      .then((result) => { 
+        console.log(result)
+        if (!result.error) {
           setMessage({
             isError: false,
             msg: "Success",
           });
+
         } else {
-          let result = JSON.parse(error.error);
+          let rel = JSON.parse(result.error);
           setMessage({
             isError: true,
-            msg: result?.message ?? "",
+            msg: rel?.message ?? "",
           });
         }
       })
@@ -54,11 +61,14 @@ export default function Login() {
   };
 
 
+  // call login when session change
   useEffect(() => {
     session?.accessToken && handleLoggedIn()
   }, [session])
 
   return (
+
+    <> 
     <form onSubmit={handleLoginWithCredential}>
       <div className="flex item-center">
         <div className="bg-sky-200 p-[10px] rounded-lg mx-auto w-[500px]  mt-[100px]">
@@ -101,14 +111,6 @@ export default function Login() {
           </div>
 
           <div className="flex justify-center space-x-4 mt-8">
-            <ToastMessage message={ message }
-                setMessage={ setMessage }
-                afterSuccess={ handleLoggedIn }
-            />
-            
-          </div>
-
-          <div className="flex justify-center space-x-4 mt-8">
             <button className="bg-yellow-300 px-4 py-2 rounded-md text-[#00F] font-bold"> 
               Login 
             </button>
@@ -119,5 +121,14 @@ export default function Login() {
         </div>
       </div>
     </form>
+
+    <div className="flex justify-center space-x-4 mx-auto mt-4">
+        <ToastMessage message={ message }
+            setMessage={ setMessage }
+            afterSuccess={ handleLoggedIn } // if login succeed will auto redirect
+        /> 
+    </div>
+
+    </>
   );
 }

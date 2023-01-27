@@ -22,13 +22,12 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const response = await loginMember(
+        const response = await loginMember(   //  call api/api.member.ts
           credentials.username,
           credentials.password
         );
-
-        if (response?.params?.id) {
-          // Any object returned will be saved in `user` property of the JWT
+ 
+        if (response?.statusCode === 200) {   // get result from server
           return Promise.resolve(response.params);
         } else {
           // Return an object that will pass error information through to the client-side.
@@ -67,11 +66,10 @@ export default NextAuth({
       return true; // Do different verification for other providers that don't have `email_verified`
     },
     async jwt({ token, user, account, profile, isNewUser }) {
-      // Persist the OAuth access_token to the token right after signin
+      // Persist the OAuth access_token to the token right after signIn function
       if (account) {
-        token.accessToken = user.token;
+        token.accessToken = user.token;   // save token from server 
       }
-      // console.log(account)
       return Promise.resolve(token);
     },
     async session({ session, token }) { 

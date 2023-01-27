@@ -32,28 +32,18 @@ export const ToastMessage = ({
   }, [message]);
   return (
     <div
-      className={`text-left flex justify-start items-center ${
-        message?.msg
-          ? `h-16 px-3 ${variant === msgVariants.TRANSPARENT ? "my-0" : "my-1 rounded-sm"}`
-          : "h-0 p-0 mt-0"
-      } ${
-        variant === msgVariants.NORMAL
-          ? message?.isError
-            ? "text-red bg-red-300"
-            : message?.msg
-            ? "text-green-leaf bg-green-300"
-            : ""
-          : "bg-black-80"
-      }`}
+      className={`text-left flex justify-start items-center 
+      ${ message.msg  ? "h-16 px-3 my-0 rounded-sm"   : "h-0 p-0 mt-0" } 
+      ${ message.isError  ? "text-red bg-red-300"  : "text-green-leaf bg-green-300" }`}
       style={{ transition: "height .3s linear" }}
     >
       {message?.msg && (
         <>
           <Info
             type={message?.isError ? infoTypes.INFO : infoTypes.CHECKED}
-            className="mr-0 w-20 min-w-content"
+            className="mr-0 min-w-content"
           />
-          <p>{message?.msg}</p>
+          <p className=" text-white uppercase font-bold">{message?.msg}</p>
         </>
       )}
     </div>

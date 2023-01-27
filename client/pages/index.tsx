@@ -9,7 +9,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Welcome Todo List by Learn Tech Tips - Zidane</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta http-equiv="Refresh" content="0; url='/todos'" />
+        {/* <meta http-equiv="Refresh" content="0; url='/todos'" /> */}
       </Head>
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">

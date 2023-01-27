@@ -41,7 +41,7 @@ export const Info = ({ type, value, className, onClick }: IInfoProps) => {
       }
       onClick={() => onClick && onClick()}
     >
-      {/* {!!info?.icon && <Image src={info.icon} />} */}
+      {!!info?.icon && <Image src={info.icon} alt={icon} />}
       {info?.component}
       <span className={"transition transition-all " + info.color}>
         {info.label || value}
