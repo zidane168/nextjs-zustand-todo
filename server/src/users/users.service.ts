@@ -50,8 +50,7 @@ export class UsersService {
   }
 
   public async getUserById(id: string): Promise<UsersDto> {
-  
-    console.log(id)
+   
     const user = await this.userModel
       .findById({ _id: new mongoose.Types.ObjectId(id) })   // use this way for get mongo objectID
       .exec(); 

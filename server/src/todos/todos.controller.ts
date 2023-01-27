@@ -1,3 +1,4 @@
+import { ITodo } from './interface/todos.interface';
 import { TodosDto } from './dto/todos.dto';
 import {
   Controller,
@@ -6,14 +7,12 @@ import {
   Body,
   UseGuards,
   Request,
-  Patch,
   Param,
   Delete,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
-import { ApiErrorResponse } from 'src/util/api-error-response.util';
-import { ApiSucceedResponse } from 'src/util/api-success-response.util';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';  
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { TodosSchema } from './schemas/todos.schema';
 
 @Controller('todos')
 export class TodosController {
@@ -21,41 +20,24 @@ export class TodosController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  public async get(@Request() req: any): Promise<any> { 
+  public async get(@Request() req: any)  {
     // JWTAuthGuard will return req.user
-    const todos = await this.todosService.get(req.user.username);
-    return new ApiSucceedResponse('Retrieved data successfully', todos)
+    return await this.todosService.get(req.user.username);
   }
 
-  // @AuthGuard( 'jwt' )
-  // @Get('profile')
-  // getUserId(@Request() req: any) {
-  //   return req.user.id;
-  // }
-
-
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() todosDto: TodosDto) {
-    return this.todosService.create(todosDto);
+  public async create(@Body() todosDto: TodosDto)  {
+    return await this.todosService.create(todosDto);
   }
-
-  // @Get()
-  // findAll() {
-  //   return this.todosService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.todosService.findOne(+id);
-  // }
-
+  
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
   //   return this.todosService.update(+id, updateTodoDto);
   // }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.todosService.remove(+id);
-  // }
+  @Delete(':id')
+  public async removeTodo(@Param('id') id: string) {
+     return await this.todosService.removeTodo(id);
+  }
 }

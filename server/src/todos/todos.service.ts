@@ -1,35 +1,45 @@
+
+import { TodosSchema } from './schemas/todos.schema';
 import { TodosDto } from './dto/todos.dto';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ITodo } from './interface/todos.interface';
-import moment from 'moment';
+import * as moment from 'moment';
+import { ApiSucceedResponse } from './../util/api-success-response.util';
+import { ApiErrorResponse } from './../util/api-error-response.util';
 
 @Injectable()
 export class TodosService {
   constructor(@InjectModel('Todo') private readonly todoModel: Model<ITodo>) {}
 
-  public async get(username: string): Promise<TodosDto[]> {
+  public async get(username: string) {
     const todos: TodosDto[] = await this.todoModel.find({
-      username: username
+      username: username,
     });
- 
+
     if (!todos) {
       throw new HttpException('Todo not found', 404);
     }
 
-    return todos;
+    return new ApiSucceedResponse('Retrieved data successfully', todos);
   }
 
   public async create(todo: TodosDto) {
     todo.createDate = moment().toDate();
     todo.status = 'DOING';
     const todoModel = await new this.todoModel(todo);
-    return todoModel.save();
+    const save = todoModel.save();
+
+    if (save) {
+      return new ApiSucceedResponse('Data is saved', []);
+    }
+
+    return new ApiErrorResponse('Data is not saved', []);
   }
 
   public async markCompleteTodo(id: string) {
-    let todo = await this.todoModel
+    const todo = await this.todoModel
       .findById({
         _id: new Types.ObjectId(id),
       })
@@ -46,6 +56,16 @@ export class TodosService {
     }
   }
 
+  public async getTodoById(id: string) {
+    const todo = await this.todoModel
+      .findById({
+        _id: new Types.ObjectId(id),
+      })
+      .exec();
+
+    return todo;
+  }
+
   public async removeTodo(id: string) {
     const todo = await this.todoModel
       .deleteOne({
@@ -57,6 +77,6 @@ export class TodosService {
       throw new HttpException('Todo Not Found', 404);
     }
 
-    return true;
+    return new ApiSucceedResponse("Todo is deleted", []);
   }
 }
