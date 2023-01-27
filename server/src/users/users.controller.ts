@@ -12,6 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ApiErrorResponse } from 'src/util/api-error-response.util';
 import { ApiSucceedResponse } from 'src/util/api-success-response.util';
 import { UsersDto } from './dto/users.dto';
+import { ObjectID } from 'typeorm';
 
 @Controller('users')
 export class UsersController {
@@ -31,9 +32,7 @@ export class UsersController {
     const result: UsersDto = await this.usersService.login(user);
 
     if (result) {
-      let access_token = await this.jwtService.sign({ id: result._id });
-
-      console.log(access_token);
+      let access_token = await this.jwtService.sign({ id: result._id }); 
       return new ApiSucceedResponse('Login succeed', access_token);
     }
 
@@ -47,7 +46,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  public async getUserById(id: number): Promise<any> {
+  public async getUserById(id: string): Promise<any> {
     const user = await this.usersService.getUserById(id);
     return new ApiSucceedResponse('Retrieved data successfully', user);
   }

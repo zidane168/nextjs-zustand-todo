@@ -1,7 +1,7 @@
 import { TodosDto } from './dto/todos.dto';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ITodo } from './interface/todos.interface';
 import moment from 'moment';
 
@@ -10,11 +10,13 @@ export class TodosService {
   constructor(@InjectModel('Todo') private readonly todoModel: Model<ITodo>) {}
 
   public async get(username: string): Promise<TodosDto[]> {
-    const todos: TodosDto[] = await this.todoModel.findById({
-      username: username,
+    const todos: TodosDto[] = await this.todoModel.find({
+      username: username
     });
 
-    if (!todos || !todos[0]) {
+    console.log(todos);
+
+    if (!todos) {
       throw new HttpException('Todo not found', 404);
     }
 
