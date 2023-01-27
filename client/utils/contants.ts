@@ -3,6 +3,7 @@ export const ROUTES = {
     HOME: "/",
     TODO_LIST: "/todos/",
     TODO_ADD: "/todos/add",  
+    LOGIN: "/auth/login"
 };
 
 export const TYPE = {

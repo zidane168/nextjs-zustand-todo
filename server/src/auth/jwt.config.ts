@@ -10,7 +10,7 @@ export class JwtConfig implements JwtOptionsFactory {
     return {
       secret: jwtConstants.secret,
       signOptions: {
-        expiresIn: '1d', // '100s',
+        expiresIn: '500s', // '100s',
         //algorithm: 'RS256'
       },
       //  verifyOptions: { algorithms: ['RS256'] },
