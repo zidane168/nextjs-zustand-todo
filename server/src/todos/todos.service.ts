@@ -13,9 +13,7 @@ export class TodosService {
     const todos: TodosDto[] = await this.todoModel.find({
       username: username
     });
-
-    console.log(todos);
-
+ 
     if (!todos) {
       throw new HttpException('Todo not found', 404);
     }
@@ -30,10 +28,10 @@ export class TodosService {
     return todoModel.save();
   }
 
-  public async markCompleteTodo(id: Number) {
+  public async markCompleteTodo(id: string) {
     let todo = await this.todoModel
       .findById({
-        id: id,
+        _id: new Types.ObjectId(id),
       })
       .exec();
 
@@ -48,10 +46,10 @@ export class TodosService {
     }
   }
 
-  public async removeTodo(id: Number) {
+  public async removeTodo(id: string) {
     const todo = await this.todoModel
       .deleteOne({
-        id: id,
+        _id: new Types.ObjectId(id),
       })
       .exec();
 

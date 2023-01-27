@@ -2,17 +2,13 @@ import {
   Controller,
   Get,
   Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
+  Body
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtService } from '@nestjs/jwt';
 import { ApiErrorResponse } from 'src/util/api-error-response.util';
 import { ApiSucceedResponse } from 'src/util/api-success-response.util';
-import { UsersDto } from './dto/users.dto';
-import { ObjectID } from 'typeorm';
+import { UsersDto } from './dto/users.dto'; 
 
 @Controller('users')
 export class UsersController {
@@ -29,7 +25,7 @@ export class UsersController {
 
   @Post('login')
   public async login(@Body() user: UsersDto) {
-    const result: UsersDto = await this.usersService.login(user);
+    const result: UsersDto = await this.usersService.login(user); 
 
     if (result) {
       let access_token = await this.jwtService.sign({ id: result._id }); 
@@ -51,13 +47,13 @@ export class UsersController {
     return new ApiSucceedResponse('Retrieved data successfully', user);
   }
 
-  public async deleteUserById(id: number): Promise<any> {
+  public async deleteUserById(id: string): Promise<any> {
     const user = await this.usersService.deleteUserById(id);
     return new ApiSucceedResponse('Deleted data successfully', user);
   }
 
   public async putUserById(
-    id: number,
+    id: string,
     propertyName: string,
     propertyValue: string,
   ): Promise<any> {

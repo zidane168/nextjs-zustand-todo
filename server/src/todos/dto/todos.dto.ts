@@ -1,5 +1,5 @@
 export class TodosDto {
-  _id: number;
+  _id: string;
   username: string;
   type: number;
   createDate: Date;

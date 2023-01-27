@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 export const TodosSchema = new mongoose.Schema({
-  id: Number,
+  id: String,
   username: String,
   type: Number,
   createDate: Date,

@@ -51,6 +51,7 @@ export class UsersService {
 
   public async getUserById(id: string): Promise<UsersDto> {
   
+    console.log(id)
     const user = await this.userModel
       .findById({ _id: new mongoose.Types.ObjectId(id) })   // use this way for get mongo objectID
       .exec(); 
@@ -62,8 +63,10 @@ export class UsersService {
     return user;
   }
 
-  public async deleteUserById(id: number): Promise<any> {
-    const user = await this.userModel.deleteOne({ id }).exec();
+  public async deleteUserById(id: string): Promise<any> {
+    const user = await this.userModel
+      .deleteOne({ _id: new mongoose.Types.ObjectId(id) })
+      .exec();
     if (user.deletedCount === 0) {
       throw new HttpException('Not Found', 404);
     }
@@ -71,13 +74,13 @@ export class UsersService {
   }
 
   public async putUserById(
-    id: number,
+    id: string,
     propertyName: string,
     propertyValue: string,
   ): Promise<UsersDto> {
     const user = await this.userModel
       .findOneAndUpdate(
-        { id },
+        { _id: new Types.ObjectId(id) },
         {
           [propertyName]: [propertyValue],
         },
