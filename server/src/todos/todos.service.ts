@@ -12,6 +12,7 @@ export class TodosService {
   constructor(@InjectModel('Todo') private readonly todoModel: Model<ITodo>) {}
 
   public async get(username: string) {
+ 
     const todos: TodosDto[] = await this.todoModel.find({
       username: username,
     });
@@ -23,9 +24,10 @@ export class TodosService {
     return new ApiSucceedResponse('Retrieved data successfully', todos);
   }
 
-  public async create(todo: TodosDto) {
+  public async create(todo: TodosDto, username: string) {
     todo.createDate = moment().toDate();
     todo.status = 'DOING';
+    todo.username = username;
     const todoModel = await new this.todoModel(todo);
     const save = todoModel.save();
 

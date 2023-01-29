@@ -23,13 +23,17 @@ export class TodosController {
   @Get()
   public async get(@Request() req: any) {
     // JWTAuthGuard will return req.user
-    return await this.todosService.get(req.user.username);
+    return await this.todosService.get(req.user.params.username);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  public async create(@Body() todosDto: TodosDto) {
-    return await this.todosService.create(todosDto);
+  public async create(
+    @Request() req: any,
+    @Body() todosDto: TodosDto
+  ) {
+    
+    return await this.todosService.create(todosDto, req.user.params.username);
   }
 
   @Patch(':id')
