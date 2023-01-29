@@ -3,7 +3,7 @@ import { devtools } from 'zustand/middleware'
 import { IItem, ITodoState } from './../../utils/interface'
 import { STATUS } from './../../utils/contants'
 import moment from 'moment';
-import { apiGetTodos, apiMarkCompleteTodo } from '../../pages/api/api.todo';
+import { apiGetTodos, apiMarkCompleteTodo, apiRemoveTodo } from '../../pages/api/api.todo';
 
 
 interface IListTodoState {
@@ -12,7 +12,7 @@ interface IListTodoState {
     types: Array<IItem>;
     addTodo: (item: ITodoState) => void;
     markCompleteTodo: (accessToken: string, id: number, index: number) => void;
-    removeTodo: (id: string) => void;
+    removeTodo: (accessToken: string, id: string) => void;
 }
   
 const store = (set:any, get:any) => ({
@@ -61,12 +61,15 @@ const store = (set:any, get:any) => ({
         }))  
     },
 
-    removeTodo: (id: string) => {
+    removeTodo: async(accessToken: string, id: string) => {
         let items = get().todos
 
         items = items.filter( (item: ITodoState) => {
             return item._id != id
         }) 
+
+        // call api remove
+        await apiRemoveTodo(accessToken, id);
 
         set(() => ({
             todos: items

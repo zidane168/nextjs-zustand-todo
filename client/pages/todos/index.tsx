@@ -80,8 +80,12 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
   };
 
   const markCompleteFunc = (id: string, index: number) => { 
-    markCompleteTodo(accessToken, id, index);
+    markCompleteTodo(accessToken, id, index); // call Zustand state
   };
+
+  const removeTodoFunc = (id: string) => {
+    removeTodo(accessToken, id);  // call Zustand state
+  }
 
   return (
     <>
@@ -163,7 +167,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
 
                         <button
                           className="danger"
-                          onClick={() => removeTodo(item._id)}
+                          onClick={() => removeTodoFunc(item._id)}
                         >
                           <TDRemoveIcon bgColor="#FFF"  width={ 20 } />
                         </button>
