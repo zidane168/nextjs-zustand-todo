@@ -3,14 +3,14 @@ import { devtools } from 'zustand/middleware'
 import { IItem, ITodoState } from './../../utils/interface'
 import { STATUS } from './../../utils/contants'
 import moment from 'moment';
-import { apiGetTodos, apiMarkCompleteTodo, apiRemoveTodo } from '../../pages/api/api.todo';
+import { apiAddTodo, apiGetTodos, apiMarkCompleteTodo, apiRemoveTodo } from '../../pages/api/api.todo';
 
 
 interface IListTodoState {
     todos: Array<ITodoState>; 
     fetchTodos: (accessToken: string) => void;
     types: Array<IItem>;
-    addTodo: (item: ITodoState) => void;
+    addTodo: (accessToken: string, item: ITodoState) => void;
     markCompleteTodo: (accessToken: string, id: number, index: number) => void;
     removeTodo: (accessToken: string, id: string) => void;
 }
@@ -30,13 +30,18 @@ const store = (set:any, get:any) => ({
         {'name': 'Research',    'value': 'Research'},
     ],
 
-    addTodo: (item: ITodoState) => {
+    addTodo: async(accessToken: string, item: ITodoState) => {
         
         item.status = STATUS.DOING
         item.created = moment().format('YYYY-MM-DD')
         set((state: { todos: Array<ITodoState> }) => ({
             todos: [...state.todos, item]
         }))        
+
+        // call API create todo
+
+        console.log(item)
+        return await apiAddTodo(accessToken, item);
     },
 
     markCompleteTodo: async(accessToken: string, id: string, index: number) => {

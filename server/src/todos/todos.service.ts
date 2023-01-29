@@ -28,6 +28,8 @@ export class TodosService {
     todo.createDate = moment().toDate();
     todo.status = 'DOING';
     todo.username = username;
+
+    console.log(todo)
     const todoModel = await new this.todoModel(todo);
     const save = todoModel.save();
 

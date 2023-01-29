@@ -21,6 +21,7 @@ export const ToastMessage = ({
   afterSuccess,
   variant = msgVariants.NORMAL,
 }: IToastMessageProps) => {
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       if (message.isError === false && message.msg) {
@@ -30,6 +31,7 @@ export const ToastMessage = ({
     }, 2000);
     return () => clearTimeout(timer);
   }, [message]);
+
   return (
     <div
       className={`text-left flex justify-start items-center 

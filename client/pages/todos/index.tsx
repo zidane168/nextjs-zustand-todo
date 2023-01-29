@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import useTodoStore from "./../../store/todos";
 
@@ -19,8 +19,8 @@ import moment from "moment";
 
 import { STATUS } from "./../../utils/contants";
 import { getProfile } from "../api/api.member";
-import { getSession, useSession } from "next-auth/react";
-import { getTodos } from "../api/api.todo";
+import { getSession } from "next-auth/react"; 
+import { ToastMessage } from "../../components/TDToastMessage";
 
 interface IPackage {
   username: string, 
@@ -31,6 +31,12 @@ interface IPackage {
 
 export default function Todo({ username, lstTodo, accessToken }: IPackage) {
   const { todos, types, addTodo, removeTodo, markCompleteTodo, fetchTodos } = useTodoStore();
+
+  // ToastMessage
+  const [message, setMessage] = useState({
+    isError: true,
+    msg: "",
+  });
 
   const today = moment().format("YYYY-MM-DD");
 
@@ -48,7 +54,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
 
     fetchTodos(accessToken)   // call api from Zustand state
   
-  }, [])    // call 1 time 
+  }, [])    // call 1 time after load
 
   const closeAddForm = () => {
     let modal = document.getElementById("addModal");    
@@ -71,12 +77,23 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
   const add = () => {
     let item:ITodoState = {
      // id: id?.current?.value ? id?.current?.value as string : ' ',
-      job: job?.current?.value ? job?.current?.value as string : ' ',
-      type: (document.getElementById("Type") as HTMLInputElement).value,
+      job: job?.current?.value ? (job?.current?.['value']) as string : ' ',
+     // type: (document.getElementById("Type") as HTMLInputElement).value,
+      type: (document.getElementById("Type") as HTMLInputElement)?.selectedIndex,
       dueDate: dueDate?.current?.value ?  (dueDate?.current?.['value']) as string :'',
-      remark: remark?.current?.value ? remark?.current?.value as string : '',
+      remark: remark?.current?.value ? (remark?.current?.['value']) as string : '',
     };
-    addTodo(item);
+    let result = addTodo(accessToken, item);
+    let isError = false;
+    if (result?.statusCode !== 200) {
+      isError = true; 
+    }
+
+    setMessage({
+      isError: isError,
+      msg: result?.message
+    }) 
+    
   };
 
   const markCompleteFunc = (id: string, index: number) => { 
@@ -91,7 +108,10 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
     <>
       <TDHeader username={ username } />
       <TDTitle>List Task items</TDTitle>
+
+
       <div className="mt-[10px] container mx-auto">
+        <ToastMessage message={ message } setMessage={ setMessage } /> 
         
         <div className="flex justify-end">
             <button id="myBtn " onClick={() => openAddForm()}>
@@ -206,66 +226,52 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
                   </span>
               </div>
               <div className="modal-body">
-                  <div className="bg-sky-300 shadow-lg p-4 container w-[500px] mx-auto rounded-md">
-                  <div>
-                      <label> 
-                      <span className="required-star"> * </span> ID: 
-                      </label>
-                      <input
-                        ref={ ref => id.current = ref }
+                  <div className="bg-sky-300 shadow-lg p-4 container w-[500px] mx-auto rounded-md"> 
+                    <div>
+                        <label> 
+                          <span className="required-star"> * </span> Job Name: 
+                        </label>
+                        <input
+                          ref={ ref => job.current = ref }
+                          required
+                          type="text"
+                          name="job"
+                          placeholder="Learn NextJS in 3 weeks"
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <TDCombobox
+                        is_required={true}
+                        label="Type"
+                        placeHolder="Please Select"
+                        items={types}
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <label> 
+                        <span className="required-star"> * </span> Due Date:{" "}
+                        </label>
+                        <input
+                        ref={dueDate}
+                        min={today}
                         required
+                        type="date"
+                        name="dueDate"
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <label> Remark: </label>
+                        <input
+                        ref={ ref => remark.current = ref }
                         type="text"
-                        name="id"
-                        placeholder="1"
-                      />
-                  </div>
+                        name="text"
+                        placeholder="Please focus, Try your best, go ahead"
+                        />
+                    </div>
 
-                  <div>
-                      <label>
-                      {" "}
-                      <span className="required-star"> * </span> Job Name:{" "}
-                      </label>
-                      <input
-                      ref={ ref => job.current = ref }
-                      required
-                      type="text"
-                      name="job"
-                      placeholder="Learn NextJS in 3 weeks"
-                      />
-                  </div>
-                  <div className="mt-4">
-                      <TDCombobox
-                      is_required={true}
-                      label="Type"
-                      placeHolder="Please Select"
-                      items={types}
-                      />
-                  </div>
-                  <div className="mt-4">
-                      <label> 
-                      <span className="required-star"> * </span> Due Date:{" "}
-                      </label>
-                      <input
-                      ref={dueDate}
-                      min={today}
-                      required
-                      type="date"
-                      name="dueDate"
-                      />
-                  </div>
-                  <div className="mt-4">
-                      <label> Remark: </label>
-                      <input
-                      ref={ ref => remark.current = ref }
-                      type="text"
-                      name="text"
-                      placeholder="Please focus, Try your best, go ahead"
-                      />
-                  </div>
-
-                  <div className="mt-4 text-right">
-                      <button onClick={add}> Add Todos Items </button>
-                  </div>
+                    <div className="mt-4 text-right">
+                        <button onClick={add}> Add Todos Items </button>
+                    </div>
                   </div>
               </div>
             </div>

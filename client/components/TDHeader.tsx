@@ -1,7 +1,12 @@
 import Link from 'next/link'
 import { ROUTES } from './../utils/contants'
 
-export default function TDHeader({ username }) {
+
+interface IHeader {
+    username: string;
+}
+
+export default function TDHeader({ username } : IHeader) {
     return (
         <div className="bg-sky-500 p-[20px] w-full flex justify-between text-white">
             <div className="flex space-x-8">

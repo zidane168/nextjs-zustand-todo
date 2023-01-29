@@ -36,11 +36,13 @@ export class TodosController {
     return await this.todosService.create(todosDto, req.user.params.username);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   public async changeStatusTodo(@Param('id') id: string) {
     return await this.todosService.changeStatusTodo(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   public async removeTodo(@Param('id') id: string) {
     return await this.todosService.removeTodo(id);
