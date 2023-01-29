@@ -74,20 +74,20 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
     }
   };
 
-  const add = () => {
-    let item:ITodoState = {
-     // id: id?.current?.value ? id?.current?.value as string : ' ',
+  const add = async() => {
+    let item:ITodoState = { 
+
       job: job?.current?.value ? (job?.current?.['value']) as string : ' ',
-     // type: (document.getElementById("Type") as HTMLInputElement).value,
-      type: (document.getElementById("Type") as HTMLInputElement)?.selectedIndex,
+     // type: (document.getElementById("Type") as HTMLInputElement).value,    // get value
+      type: (document.getElementById("Type") as HTMLInputElement)?.selectedIndex,   // get index
       dueDate: dueDate?.current?.value ?  (dueDate?.current?.['value']) as string :'',
       remark: remark?.current?.value ? (remark?.current?.['value']) as string : '',
     };
-    let result = addTodo(accessToken, item);
+    let result = await addTodo(accessToken, item);
     let isError = false;
     if (result?.statusCode !== 200) {
       isError = true; 
-    }
+    } 
 
     setMessage({
       isError: isError,
@@ -113,7 +113,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
       <div className="mt-[10px] container mx-auto">
         <ToastMessage message={ message } setMessage={ setMessage } /> 
         
-        <div className="flex justify-end">
+        <div className="flex justify-end mt-2">
             <button id="myBtn " onClick={() => openAddForm()}>
                 Add New Task
             </button>

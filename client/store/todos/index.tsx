@@ -38,9 +38,7 @@ const store = (set:any, get:any) => ({
             todos: [...state.todos, item]
         }))        
 
-        // call API create todo
-
-        console.log(item)
+        // call API create todo 
         return await apiAddTodo(accessToken, item);
     },
 
