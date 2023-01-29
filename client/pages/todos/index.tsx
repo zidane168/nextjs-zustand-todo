@@ -17,10 +17,11 @@ import {
 
 import moment from "moment";
 
-import { STATUS } from "./../../utils/contants";
+import { ROUTES, STATUS } from "./../../utils/contants";
 import { getProfile } from "../api/api.member";
 import { getSession } from "next-auth/react"; 
 import { ToastMessage } from "../../components/TDToastMessage";
+import Router, { useRouter } from "next/router";
 
 interface IPackage {
   username: string, 
@@ -45,6 +46,8 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
   const dueDate = useRef<any>();
   const remark = useRef<any>();
 
+  const router = useRouter();
+
   useEffect(() => {
     let modal = document.getElementById("addModal");
 
@@ -52,7 +55,15 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
       modal.style.display = "none";
     }
 
-    fetchTodos(accessToken)   // call api from Zustand state
+    const fetchData = async () => {
+      const items = await fetchTodos(accessToken);  // call api from Zustand state
+    
+      if (!items) {
+        router.push(ROUTES.LOGIN)
+      }
+    }
+
+    fetchData().catch(console.error);
   
   }, [])    // call 1 time after load
 
@@ -108,7 +119,6 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
     <>
       <TDHeader username={ username } />
       <TDTitle>List Task items</TDTitle>
-
 
       <div className="mt-[10px] container mx-auto">
         <ToastMessage message={ message } setMessage={ setMessage } /> 
@@ -290,7 +300,7 @@ export async function getServerSideProps(ctx) {
  
   // ko call get Todos list here, because we will useEffect to call it,
   let [ user ] = await Promise.all([getProfile(accessToken)]) // [ user ] moi ok, { user } ko co data,ko hieu 
-  
+ 
   return {
     props: { 
       username: user?.params?.username ? user.params.username : null,

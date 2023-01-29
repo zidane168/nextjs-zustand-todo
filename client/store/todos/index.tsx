@@ -1,29 +1,31 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { IItem, ITodoState } from './../../utils/interface'
-import { STATUS } from './../../utils/contants'
+import { ROUTES, STATUS } from './../../utils/contants'
 import moment from 'moment';
 import { apiAddTodo, apiGetTodos, apiMarkCompleteTodo, apiRemoveTodo } from '../../pages/api/api.todo';
+import { useRouter } from 'next/router';
 
 
 interface IListTodoState {
     todos: Array<ITodoState>; 
-    fetchTodos: (accessToken: string) => void;
+    fetchTodos: (accessToken: string) => number;        // return statusCode for unauthorization
     types: Array<IItem>;
     addTodo: (accessToken: string, item: ITodoState) => void;
     markCompleteTodo: (accessToken: string, id: number, index: number) => void;
     removeTodo: (accessToken: string, id: string) => void;
 }
-  
+
 const store = (set:any, get:any) => ({
     todos: [],
     fetchTodos: async(accessToken: string) => {  
         const items = await apiGetTodos(accessToken)
 
         if (items?.statusCode == 200) {
-            await set({ todos: items.params })
-        }
-       
+            await set({ todos: items.params }) 
+        }  
+ 
+        return items 
     },
     types: [
         {'name': 'Home',        'value': 'Home'},
@@ -31,15 +33,14 @@ const store = (set:any, get:any) => ({
     ],
 
     addTodo: async(accessToken: string, item: ITodoState) => {
-        
-        item.status = STATUS.DOING
-        item.created = moment().format('YYYY-MM-DD')
-        set((state: { todos: Array<ITodoState> }) => ({
-            todos: [...state.todos, item]
-        }))        
-
+         
         // call API create todo 
-        return await apiAddTodo(accessToken, item);
+        const added = await apiAddTodo(accessToken, item);
+        if (added?.statusCode === 200) {
+            
+            // fetch data
+            return await get().fetchTodos(accessToken)      // fetch data
+        }
     },
 
     markCompleteTodo: async(accessToken: string, id: string, index: number) => {
@@ -65,8 +66,9 @@ const store = (set:any, get:any) => ({
     },
 
     removeTodo: async(accessToken: string, id: string) => {
+ 
         let items = get().todos
-
+ 
         items = items.filter( (item: ITodoState) => {
             return item._id != id
         }) 
