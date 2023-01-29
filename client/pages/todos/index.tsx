@@ -30,7 +30,7 @@ interface IPackage {
 
 
 export default function Todo({ username, lstTodo, accessToken }: IPackage) {
-  const { todos, types, addTodo, removeTodo, markCompleteTodo } = useTodoStore();
+  const { todos, types, addTodo, removeTodo, markCompleteTodo, fetchTodos } = useTodoStore();
 
   const today = moment().format("YYYY-MM-DD");
 
@@ -39,7 +39,6 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
   const dueDate = useRef<any>();
   const remark = useRef<any>();
 
-
   useEffect(() => {
     let modal = document.getElementById("addModal");
 
@@ -47,7 +46,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
       modal.style.display = "none";
     }
 
-    // fetchTodos(accessToken)
+    fetchTodos(accessToken)   // call api from Zustand state
   
   }, [])    // call 1 time 
 
@@ -279,12 +278,12 @@ export async function getServerSideProps(ctx) {
   const session = await getSession(ctx)
   const accessToken = session?.accessToken || "" 
  
-  let [ user, lstTodo ] = await Promise.all([getProfile(accessToken), getTodos(accessToken)]) // [ user ] moi ok, { user } ko co data,ko hieu 
+  // ko call get Todos list here, because we will useEffect to call it,
+  let [ user ] = await Promise.all([getProfile(accessToken)]) // [ user ] moi ok, { user } ko co data,ko hieu 
   
   return {
     props: { 
       username: user?.params?.username ? user.params.username : null,
-      // lstTodo: lstTodo?.params ? lstTodo.params : null,
       accessToken: accessToken
     }
   }
