@@ -19,15 +19,19 @@ import moment from "moment";
 
 import { STATUS } from "./../../utils/contants";
 import { getProfile } from "../api/api.member";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { getTodos } from "../api/api.todo";
 
-interface IUser {
-  username: string
+interface IPackage {
+  username: string, 
+  lstTodo: Array<ITodoState>,
+  accessToken: string, 
 }
 
 
-export default function Todo({ username }: IUser) {
+export default function Todo({ username, lstTodo, accessToken }: IPackage) {
   const { todos, types, addTodo, removeTodo, markCompleteTodo } = useTodoStore();
+
   const today = moment().format("YYYY-MM-DD");
 
   const id = useRef<any>();
@@ -42,6 +46,8 @@ export default function Todo({ username }: IUser) {
     if (modal) {
       modal.style.display = "none";
     }
+
+    // fetchTodos(accessToken)
   
   }, [])    // call 1 time 
 
@@ -65,7 +71,7 @@ export default function Todo({ username }: IUser) {
 
   const add = () => {
     let item:ITodoState = {
-      id: id?.current?.value ? id?.current?.value as string : ' ',
+     // id: id?.current?.value ? id?.current?.value as string : ' ',
       job: job?.current?.value ? job?.current?.value as string : ' ',
       type: (document.getElementById("Type") as HTMLInputElement).value,
       dueDate: dueDate?.current?.value ?  (dueDate?.current?.['value']) as string :'',
@@ -74,8 +80,8 @@ export default function Todo({ username }: IUser) {
     addTodo(item);
   };
 
-  const markCompleteFunc = (index: number) => {
-    markCompleteTodo(index);
+  const markCompleteFunc = (id: string, index: number) => { 
+    markCompleteTodo(accessToken, id, index);
   };
 
   return (
@@ -90,99 +96,99 @@ export default function Todo({ username }: IUser) {
             </button>
         </div>
         <div className="w-full">
-          {todos.length > 0 && (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th> No </th>
-                  <th> Job </th>
-                  <th> Type </th>
-                  <th> Remark </th>
-                  <th> Create Date </th>
-                  <th> Due Date </th>
-                  <th> Overdue </th>
-                  <th> Status </th>
-                  <th> Action </th>
-                </tr>
-              </thead>
-              <tbody>
-                {todos.map((item, index) => {
-                  let dueDate = moment(item.dueDate, "YYYY-MM-DD");
-                  let distance = moment.duration(dueDate.diff(today)).asDays();
-                  let highlightOverDue = "";
+         
+          <table className="table">
+            <thead>
+              <tr>
+                <th> No </th>
+                <th> Job </th>
+                <th> Type </th>
+                <th> Remark </th>
+                <th> Create Date </th>
+                <th> Due Date </th>
+                <th> Overdue </th>
+                <th> Status </th>
+                <th> Action </th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+              todos.map((item, index) => {
+                let dueDate = moment(item.dueDate, "YYYY-MM-DD");
+                let distance = moment.duration(dueDate.diff(today)).asDays();
+                let highlightOverDue = "";
 
-                  if (distance === 0) {
-                    if (item.status === STATUS.DOING) {
-                      item.status = STATUS.OVERDUE;
-                      highlightOverDue = "text-rose-700";
-                    }
+                if (distance === 0) {
+                  if (item.status === STATUS.DOING) {
+                    item.status = STATUS.OVERDUE;
+                    highlightOverDue = "text-rose-700";
                   }
+                }
 
-                  let todoStyle = "uncomplete";
-                  let buttonCompleteStyle = "info";
-                  let statusStyle = "doing";
-                  if (item.status === STATUS.COMPLETED) {
-                    todoStyle = "complete";
-                    statusStyle = "done";
-                    buttonCompleteStyle = "success";
-                  }
+                let todoStyle = "uncomplete";
+                let buttonCompleteStyle = "info";
+                let statusStyle = "doing";
+                if (item.status === STATUS.COMPLETED) {
+                  todoStyle = "complete";
+                  statusStyle = "done";
+                  buttonCompleteStyle = "success";
+                }
 
-                  let typeStyle = "home";
-                  if (item.type === "Research") {
-                    typeStyle = "research";
-                  }
+                let typeStyle = "home";
+                if (item.type === "Research") {
+                  typeStyle = "research";
+                }
 
-                  return (
-                    <tr key={index} className={todoStyle}>
-                      <td> {item.id} </td>
-                      <td> {item.job} </td>
-                      <td> 
-                        <span className={typeStyle}> </span> {item.type} 
-                      </td>
-                      <td> {item.remark} </td> 
-                      <td> {item.created} </td> 
-                      <td> {item.dueDate} </td>
-                      <td> 
-                        <span className={highlightOverDue}> 
-                          {distance} 
-                        </span> 
-                        days! 
-                      </td>
-                      <td className={statusStyle}> {item.status} </td>
-                      <td>
-                        <div className="flex space-x-2">
-                          <button className="warning ">
-                            <TDEditIcon bgColor="#FFF" width={ 20 } />
-                          </button>
+                return (
+                  <tr key={index} className={todoStyle}>
+                    <td> {index+1} </td>
+                    <td> {item.job} </td>
+                    <td> 
+                      <span className={typeStyle}> </span> {item.type === 1 ? 'Home' : 'Research'} 
+                    </td>
+                    <td> {item.remark} </td> 
+                    <td> { moment(item.createDate).format("YYYY-MM-DD HH:mm:ss") } </td> 
+                    <td> { moment(item.dueDate).format("YYYY-MM-DD HH:mm:ss") } </td>
+                    <td> 
+                      <span className={highlightOverDue}> 
+                        {distance} 
+                      </span> 
+                      days! 
+                    </td>
+                    <td className={statusStyle}> {item.status} </td>
+                    <td>
+                      <div className="flex space-x-2">
+                        <button className="warning ">
+                          <TDEditIcon bgColor="#FFF" width={ 20 } />
+                        </button>
 
-                          <button
-                            className="danger"
-                            onClick={() => removeTodo(item.id)}
-                          >
-                            <TDRemoveIcon bgColor="#FFF"  width={ 20 } />
-                          </button>
+                        <button
+                          className="danger"
+                          onClick={() => removeTodo(item._id)}
+                        >
+                          <TDRemoveIcon bgColor="#FFF"  width={ 20 } />
+                        </button>
 
-                          <button
-                            className={buttonCompleteStyle}
-                            onClick={() => markCompleteFunc(index)}
-                          >
-                            {item.status === STATUS.COMPLETED ? (
-                              <TDMarkUncompleteIcon bgColor="#FFF" width={ 20 } />
-                            ) : (
-                              <TDMarkCompleteIcon bgColor="#FFF"  width={ 20 } />
-                            )}
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
+                        <button
+                          className={buttonCompleteStyle}
+                          onClick={() => markCompleteFunc(item._id, index)}
+                        >
+                          {item.status === STATUS.COMPLETED ? (
+                            <TDMarkUncompleteIcon bgColor="#FFF" width={ 20 } />
+                          ) : (
+                            <TDMarkCompleteIcon bgColor="#FFF"  width={ 20 } />
+                          )}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table> 
 
           { 
-          todos.length <= 0 && 
+          todos.length == 0 && 
             <div className='text-rose-500 text-xl text-center h-[calc(100%-100px)]'> Congratulation, You had completed all task today!</div>
           }
         </div>
@@ -273,11 +279,13 @@ export async function getServerSideProps(ctx) {
   const session = await getSession(ctx)
   const accessToken = session?.accessToken || "" 
  
-  let [ user ] = await Promise.all([getProfile(accessToken)]) // [ user ] moi ok, { user } ko co data,ko hieu
- 
+  let [ user, lstTodo ] = await Promise.all([getProfile(accessToken), getTodos(accessToken)]) // [ user ] moi ok, { user } ko co data,ko hieu 
+  
   return {
     props: { 
-      username: user?.params?.username ? user.params.username : null
+      username: user?.params?.username ? user.params.username : null,
+      // lstTodo: lstTodo?.params ? lstTodo.params : null,
+      accessToken: accessToken
     }
   }
 }

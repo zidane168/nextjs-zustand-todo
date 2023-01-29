@@ -3,6 +3,8 @@ import { devtools } from 'zustand/middleware'
 import { IItem, ITodoState } from './../../utils/interface'
 import { STATUS } from './../../utils/contants'
 import moment from 'moment';
+import { getTodos, markCompleteTodo } from '../../pages/api/api.todo';
+import { getSession } from 'next-auth/react';
 
 
 
@@ -10,12 +12,17 @@ interface IListTodoState {
     todos: Array<ITodoState>;
     types: Array<IItem>;
     addTodo: (item: ITodoState) => void;
-    markCompleteTodo: (id: number) => void;
+    markCompleteTodo: (accessToken: string, id: number, index: number) => void;
     removeTodo: (id: string) => void;
+    fetchTodos: (accessToken: string) => void;
 }
   
 const store = (set:any, get:any) => ({
     todos: [],
+    fetchTodos: async(accessToken: string) => {  
+        const items = await getTodos(accessToken)
+        await set({ todos: items })
+    },
     types: [
         {'name': 'Home',        'value': 'Home'},
         {'name': 'Research',    'value': 'Research'},
@@ -30,30 +37,37 @@ const store = (set:any, get:any) => ({
         }))        
     },
 
-    markCompleteTodo: (index: number) => {
+    markCompleteTodo: async(accessToken: string, id: string, index: number) => {
 
-        let items = get().todos;
+        const result = await getTodos(accessToken)
 
-        let temp = { ...items[index] };
+        if (result?.statusCode == 200) {
+            const items = result.params;
+            let temp = { ...items[index] };
 
-        if (temp.status === STATUS.COMPLETED) {
-            temp.status = STATUS.DOING
-        } else {
-            temp.status = STATUS.COMPLETED
-        }
-        
-        items[index] = temp;
+            if (temp.status === STATUS.COMPLETED) {
+                temp.status = STATUS.DOING
+            } else {
+                temp.status = STATUS.COMPLETED
+            }
+            
+            items[index] = temp;
+            console.log(items)
 
-        set(() => ({
-            todos: items
-        })) 
+            // call api
+            // await markCompleteTodo(accessToken, id);
+
+            set(() => ({
+                todos: items
+            })) 
+        } 
     },
 
     removeTodo: (id: string) => {
         let items = get().todos
 
         items = items.filter( (item: ITodoState) => {
-            return item.id != id
+            return item._id != id
         }) 
 
         set(() => ({

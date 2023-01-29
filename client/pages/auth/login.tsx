@@ -16,8 +16,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const [message, setMessage] = useState({
-    isError: false,
-    msg: "Success",
+    isError: true,
+    msg: "",
   });
 
   const router = useRouter();

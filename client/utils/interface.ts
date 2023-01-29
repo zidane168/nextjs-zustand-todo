@@ -4,7 +4,7 @@ export interface IItem {
 }
 
 export interface ITodoState {
-    id: string;
+    _id: string; 
     job: string;
     type: string; 
     remark: string;
