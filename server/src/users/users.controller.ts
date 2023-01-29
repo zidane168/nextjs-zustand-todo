@@ -1,62 +1,58 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  Request,
+  Delete,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
-import { JwtService } from '@nestjs/jwt';
-import { ApiErrorResponse } from 'src/util/api-error-response.util';
-import { ApiSucceedResponse } from 'src/util/api-success-response.util';
 import { UsersDto } from './dto/users.dto';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
+
+  
+  @UseGuards(JwtAuthGuard)
+  @Get('getProfile')
+  public async getProfile(@Request() req: any) {    
+    return await this.usersService.getProfile(req.user.params._id);
+  }
 
   @Get()
   public async getUsers(): Promise<any> {
-    const users = await this.usersService.getUsers();
-    return new ApiSucceedResponse('Retrieved data successfully: ', users);
+    return await this.usersService.getUsers();
   }
 
   @Post('login')
   public async login(@Body() user: UsersDto) {
-    const result: UsersDto = await this.usersService.login(user);
-
-    if (result) {
-      let access_token = await this.jwtService.sign({ id: result._id });
-      return new ApiSucceedResponse('Login succeed', access_token);
-    }
-
-    return new ApiErrorResponse('Login failed', null);
+    return await this.usersService.login(user);
   }
 
   @Post('register')
   public async register(@Body() newUser: UsersDto) {
-    const user = await this.usersService.register(newUser);
-    return new ApiSucceedResponse('Register data successfully', user);
+    return await this.usersService.register(newUser);
   }
 
   @Get(':id')
-  public async getUserById(id: string): Promise<any> {
-    const user = await this.usersService.getUserById(id);
-    return new ApiSucceedResponse('Retrieved data successfully', user);
+  public async getUserById(id: string) {
+    return await this.usersService.getUserById(id);
   }
 
-  public async deleteUserById(id: string): Promise<any> {
-    const user = await this.usersService.deleteUserById(id);
-    return new ApiSucceedResponse('Deleted data successfully', user);
+  @Delete()
+  public async deleteUserById(id: string) {
+    return await this.usersService.deleteUserById(id);
   }
 
   public async putUserById(
     id: string,
     propertyName: string,
     propertyValue: string,
-  ): Promise<any> {
-    const user = await this.usersService.putUserById(
-      id,
-      propertyName,
-      propertyValue,
-    );
-    return new ApiSucceedResponse('User', user);
+  ) {
+    return await this.usersService.putUserById(id, propertyName, propertyValue);
   }
+
 }
