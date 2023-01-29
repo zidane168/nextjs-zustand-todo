@@ -1,8 +1,6 @@
-import { getSession, useSession } from 'next-auth/react';
 import { AxiosError } from 'axios';
 import axiosClient from '../../utils/axiosClient';
 import { envConfig } from './../../utils/config'; 
-
 
 export const loginMember = async(
     username: string,

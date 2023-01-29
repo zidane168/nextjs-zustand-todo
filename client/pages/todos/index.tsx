@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 
 import useTodoStore from "./../../store/todos";
-import shallow from "zustand/shallow";
 
 import TDHeader from "./../../components/TDHeader";
 import TDFooter from "./../../components/TDFooter";
