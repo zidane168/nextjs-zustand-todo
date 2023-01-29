@@ -17,8 +17,8 @@ interface IListTodoState {
 const store = (set:any, get:any) => ({
     todos: [],
     types: [
-        {'name': 'Home', 'value': 'Home'},
-        {'name': 'Research', 'value': 'Research'},
+        {'name': 'Home',        'value': 'Home'},
+        {'name': 'Research',    'value': 'Research'},
     ],
 
     addTodo: (item: ITodoState) => {

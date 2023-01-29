@@ -57,14 +57,14 @@ export default function Login() {
 
 
   const handleLoggedIn = async() => {
-    await router.push(ROUTES.HOME)
+    await router.push(ROUTES.TODO_LIST)
   };
 
 
-  // call login when session change
-  useEffect(() => {
-    session?.accessToken && handleLoggedIn()
-  }, [session])
+  // // call login when session change
+  // useEffect(() => {
+  //   session?.accessToken && handleLoggedIn()
+  // }, [session])
 
   return (
 

@@ -1,27 +1,38 @@
-import axios from "axios"
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
+import { getSession } from "next-auth/react";
 import { envConfig, sitePrefix } from "./config"
 
 const headers = {
     "Content-Type": "application/json"
 }
 
-const request = axios.create({
+const axiosClient = axios.create({
     baseURL: envConfig.API_PATH,
     withCredentials: false,
     headers
 })
 
-request.interceptors.request.use(
-    (config) => {
-        return config
+// instance.interceptors.request.use(async (request) => {
+//     const session = await getSession();
+//     if (session) {
+//       request.headers.Authorization = `Bearer ${session.jwt}`;
+//     }
+//     return request;
+//   });
+
+// before send to server
+axiosClient.interceptors.request.use(
+    function (config: AxiosRequestConfig) { 
+        return config; 
     },
-    (err) => {
+    function (err) {
         return Promise.reject(err)
     }
 )
 
-request.interceptors.response.use(
-    (response) => {
+// add a response interceptor
+axiosClient.interceptors.response.use(
+    function (response: AxiosResponse) {
         const msg = response?.data?.message;
         const code = response?.data?.code;
 
@@ -34,7 +45,7 @@ request.interceptors.response.use(
 
         return response
     },
-    (error) => {
+    function (error) {
         if (error.response && error.response.data) {
             return Promise.reject(error.response.data)
         }
@@ -43,4 +54,4 @@ request.interceptors.response.use(
     },
 )
 
-export default request
+export default axiosClient

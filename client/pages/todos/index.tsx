@@ -19,8 +19,15 @@ import {
 import moment from "moment";
 
 import { STATUS } from "./../../utils/contants";
+import { getProfile } from "../api/api.member";
+import { getSession } from "next-auth/react";
 
-export default function Add() {
+interface IUser {
+  username: string
+}
+
+
+export default function Todo({ username }: IUser) {
   const { todos, types, addTodo, removeTodo, markCompleteTodo } = useTodoStore();
   const today = moment().format("YYYY-MM-DD");
 
@@ -48,8 +55,6 @@ export default function Add() {
     // let modalChildren = document.getElementById("modal-content");  
     // modalChildren.classList.add('close-modal-content')
     // modal.classList.add('close-modal')
-    
-     
   };
 
   const openAddForm = () => {
@@ -76,7 +81,7 @@ export default function Add() {
 
   return (
     <>
-      <TDHeader />
+      <TDHeader username={ username } />
       <TDTitle>List Task items</TDTitle>
       <div className="mt-[10px] container mx-auto">
         
@@ -262,4 +267,18 @@ export default function Add() {
       <TDFooter />
     </>
   );
+}
+
+export async function getServerSideProps(ctx) {
+
+  const session = await getSession(ctx)
+  const accessToken = session?.accessToken || "" 
+ 
+  let [ user ] = await Promise.all([getProfile(accessToken)]) // [ user ] moi ok, { user } ko co data,ko hieu
+ 
+  return {
+    props: { 
+      username: user?.params?.username ? user.params.username : null
+    }
+  }
 }

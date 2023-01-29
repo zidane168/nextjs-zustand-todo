@@ -28,7 +28,8 @@ export default NextAuth({
         );
  
         if (response?.statusCode === 200) {   // get result from server
-          return Promise.resolve(response.params);
+          return Promise.resolve(response.params);  // ket qua tra ve tu server se di xuong function jwt ben duoi note lai cai token
+
         } else {
           // Return an object that will pass error information through to the client-side.
           throw new Error(
@@ -68,12 +69,12 @@ export default NextAuth({
     async jwt({ token, user, account, profile, isNewUser }) {
       // Persist the OAuth access_token to the token right after signIn function
       if (account) {
-        token.accessToken = user.token;   // save token from server 
+        token.accessToken = user;   // save token from server  
       }
       return Promise.resolve(token);
     },
-    async session({ session, token }) { 
-      session.accessToken = token.accessToken;
+    async session({ session, token }) {   
+      session.accessToken = token.accessToken; 
       return Promise.resolve(session);
     },
   },

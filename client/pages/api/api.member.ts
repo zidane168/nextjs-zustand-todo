@@ -1,6 +1,8 @@
+import { getSession, useSession } from 'next-auth/react';
 import { AxiosError } from 'axios';
-import request from '../../utils/request';
+import axiosClient from '../../utils/axiosClient';
 import { envConfig } from './../../utils/config'; 
+
 
 export const loginMember = async(
     username: string,
@@ -9,7 +11,7 @@ export const loginMember = async(
     let url = `${envConfig.API_PATH}/users/login`
 
     try {
-        const response = await request({
+        const response = await axiosClient({
             method: "POST",
             url, 
             data: {
@@ -24,4 +26,23 @@ export const loginMember = async(
         return err?.response?.data
     }
 
+}
+
+export const getProfile = async(
+    accessToken: string
+) => { 
+    let url = `${envConfig.API_PATH}/users/getProfile` 
+    try {  
+        axiosClient.defaults.headers.common = {'Authorization': `bearer ${accessToken}`}
+        const response = await axiosClient({
+            method: "GET",
+            url,   
+        })
+
+        const data = response.data; 
+        return data;
+    } catch (error) {
+        const err = error as AxiosError
+        return err?.response?.data
+    }
 }

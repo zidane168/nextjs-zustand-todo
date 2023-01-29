@@ -17,7 +17,7 @@ const data = [
   {
     type: infoTypes.CHECKED,
     component: (
-      <Image src={CheckedIcon} width={20} height={20} layout={"fixed"} />
+      <Image src={CheckedIcon} width={20} height={20} layout={"fixed"} alt="Check Icon"/>
     ),
     color: "mr-1 text-red text-xl",
     label: "",

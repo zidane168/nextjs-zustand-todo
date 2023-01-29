@@ -39,7 +39,7 @@ export class UsersService {
       return new ApiErrorResponse('Password is not match', []);
     }
  
-    let access_token = await this.jwtService.sign({ id: result._id });
+    const access_token = await this.jwtService.sign({ id: result._id });
     return new ApiSucceedResponse('Login succeed', access_token);
   }
 

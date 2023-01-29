@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ROUTES } from './../utils/contants'
 
-export default function TDHeader() {
+export default function TDHeader({ username }) {
     return (
         <div className="bg-sky-500 p-[20px] w-full flex justify-between text-white">
             <div className="flex space-x-8">
@@ -17,7 +17,7 @@ export default function TDHeader() {
                 </div>
             </div>
             <div className="flex">
-                <div> Welcome: zidane - Learn Tech Tips</div>
+                <div> Welcome: { username ? username : '<cannot get name>' }</div>
             </div>
         </div>
     )
