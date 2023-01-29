@@ -3,9 +3,7 @@ import { devtools } from 'zustand/middleware'
 import { IItem, ITodoState } from './../../utils/interface'
 import { STATUS } from './../../utils/contants'
 import moment from 'moment';
-import { getTodos, markCompleteTodo } from '../../pages/api/api.todo';
-import { getSession } from 'next-auth/react';
-
+import { apiGetTodos, apiMarkCompleteTodo } from '../../pages/api/api.todo';
 
 
 interface IListTodoState {
@@ -20,7 +18,7 @@ interface IListTodoState {
 const store = (set:any, get:any) => ({
     todos: [],
     fetchTodos: async(accessToken: string) => {  
-        const items = await getTodos(accessToken)
+        const items = await apiGetTodos(accessToken)
 
         if (items?.statusCode == 200) {
             await set({ todos: items.params })
@@ -55,8 +53,8 @@ const store = (set:any, get:any) => ({
         items[index] = temp;
         console.log(items)
 
-        // call api
-        // await markCompleteTodo(accessToken, id);
+        // call api update to server
+        await apiMarkCompleteTodo(accessToken, id);
 
         set(() => ({
             todos: items

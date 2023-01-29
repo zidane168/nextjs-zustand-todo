@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import axiosClient from '../../utils/axiosClient';
 import { envConfig } from './../../utils/config'; 
  
-export const getTodos = async(
+export const apiGetTodos = async(
     accessToken: string
 ) => { 
     let url = `${envConfig.API_PATH}/todos` 
@@ -21,11 +21,11 @@ export const getTodos = async(
     }
 }
 
-export const markCompleteTodo = async(
+export const apiMarkCompleteTodo = async(
     accessToken: string, 
     id: string
 ) => {
-    let url = `${envConfig.API_PATH}/todo/${id}`
+    let url = `${envConfig.API_PATH}/todos/${id}`
 
     try {
         axiosClient.defaults.headers.common = {'Authorization': `bearer ${accessToken}` }
