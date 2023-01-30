@@ -8,10 +8,6 @@ import TDTitle from "./../../components/TDTitle";
 import TDCombobox from "./../../components/TDCombobox";
 import { ITodoState } from './../../utils/interface'
 
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-
-
 import {
   TDEditIcon,
   TDRemoveIcon,
@@ -240,85 +236,53 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
                   </span>
               </div>
               <div className="modal-body">
-
-              <Formik 
-                
-                initialValues={{ job: "", type: "", remark: "", dueDate: "" }}
-                validationSchema={Yup.object({
-                  job: Yup.string()
-                    .max(50, "Must be 50 characters or less")
-                    .required("Job is Required"),
-                    type: Yup.string()                     
-                    .required("Type is Required"),
-
-                  type: Yup.string()
-                    .oneOf(
-                      ['1', '2'],
-                      'Invalid Job Type'
-                    ).required("Type is Required"),
-
-                  remark: Yup.string()
-                    .max(100, "Must be 100 characters or less"),
-                  dueDate: Yup.string()                    
-                    .required("DueDate is Required")
-                })}
-                onSubmit={(values, { setSubmitting }) => {
-                   console.log(values)
-
-                  alert(JSON.stringify(values))
-          
-                }}
-              >
-                 
-                <Form>
                   <div className="bg-sky-300 shadow-lg p-4 container w-[500px] mx-auto rounded-md"> 
                     <div>
-                        <label  htmlFor="job" className="flex items-center text-right font-bold uppercase text-sky-600"> 
-                          Job Name <span className="required-star"> (*) </span>  
+                        <label> 
+                          <span className="required-star"> * </span> Job Name: 
                         </label>
-                        <Field name="job" type="text" placeHolder="Learn NextJS in Tet Holiday" />                        
-                        <div className="error-message">  
-                          <ErrorMessage name="job"/>
-                        </div>
+                        <input
+                          ref={ ref => job.current = ref }
+                          required
+                          type="text"
+                          name="job"
+                          placeholder="Learn NextJS in 3 weeks"
+                        />
                     </div>
                     <div className="mt-4">
-                        <label  htmlFor="type" className="flex items-center text-right font-bold uppercase text-sky-600"> 
-                          Type <span className="required-star"> (*) </span>  
-                        </label>
-                        <Field name="type" as="select" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          <option value={""}>Please Select </option>
-                          <option value="1"> Home  </option>
-                          <option value="2"> Research  </option>
-                        </Field>
-                        <div className="error-message">  
-                          <ErrorMessage name="type"/>
-                        </div> 
+                        <TDCombobox
+                        is_required={true}
+                        label="Type"
+                        placeHolder="Please Select"
+                        items={types}
+                        />
                     </div>
                     <div className="mt-4">
-                        <label  htmlFor="job" className="flex items-center text-right font-bold uppercase text-sky-600"> 
-                          Due Date: <span className="required-star"> (*) </span> 
+                        <label> 
+                        <span className="required-star"> * </span> Due Date:{" "}
                         </label>
-                        <Field name="dueDate" type="date" min={ today } placeHolder="Learn NextJS in Tet Holiday" />                        
-                        <div className="error-message">  
-                          <ErrorMessage name="dueDate"/>
-                        </div>
+                        <input
+                        ref={dueDate}
+                        min={today}
+                        required
+                        type="date"
+                        name="dueDate"
+                        />
                     </div>
                     <div className="mt-4">
-                        <label  htmlFor="remark" className="flex items-center text-right font-bold uppercase text-sky-600"> 
-                          Remark: 
-                        </label>
-                        <Field name="remark" type="text" placeHolder="Remark for NextJS Job" />                        
-                        <div className="error-message">  
-                          <ErrorMessage name="remark"/>
-                        </div>
+                        <label> Remark: </label>
+                        <input
+                        ref={ ref => remark.current = ref }
+                        type="text"
+                        name="text"
+                        placeholder="Please focus, Try your best, go ahead"
+                        />
                     </div>
 
                     <div className="mt-4 text-right">
-                        <button type="submit" className="   bg-yellow-300 px-4 py-2 rounded-md text-[#00F] font-bold"> Add Todos Items </button>
+                        <button onClick={add}> Add Todos Items </button>
                     </div>
                   </div>
-                </Form> 
-              </Formik>
               </div>
             </div>
         </div>

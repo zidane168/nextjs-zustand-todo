@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import OpenEye from "/public/icon/open-eye.svg";
 import CloseEye from "/public/icon/close-eye.svg";
-import useStore from "./../../store/login";
+import useStore from "../../store/login";
 
 import * as React from "react";
 import { signIn, useSession } from "next-auth/react";

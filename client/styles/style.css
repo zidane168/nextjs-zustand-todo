@@ -233,7 +233,7 @@
 
  /* control */
 
- input[type='text'], input[type='password'] {
+ input[type='text'], input[type='password'], select, input[type='date'] {
   @apply p-2 w-full rounded-full mb-2
  }
 

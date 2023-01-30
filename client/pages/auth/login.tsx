@@ -37,6 +37,7 @@ const loginForm = () => {
       initialValues={{ username: "", password: "" }}
       validationSchema={Yup.object({
         username: Yup.string()
+          .min(2, 'Too Short!') 
           .max(30, "Must be 30 characters or less")
           .required("Username is Required"),
         password: Yup.string().required("Password is Required"),
@@ -75,7 +76,7 @@ const loginForm = () => {
                 htmlFor="username"
                 className="flex items-center text-right font-bold uppercase text-sky-600"
               >
-                Username
+                Username  <span className="required-star"> (*) </span>
               </label>
               <Field name="username" type="text" />
               <div className="error-message">
@@ -88,7 +89,7 @@ const loginForm = () => {
                 htmlFor="password"
                 className="flex items-center text-right font-bold uppercase text-sky-600"
               >
-                Password
+                Password  <span className="required-star"> (*) </span>
               </label>
 
               <div className="relative">
