@@ -26,6 +26,7 @@ import { getProfile } from "../api/api.member";
 import { getSession } from "next-auth/react"; 
 import { ToastMessage } from "../../components/TDToastMessage";
 import Router, { useRouter } from "next/router";
+import { PaginatedItems } from "../../components/TDPagination";
 
 interface IPackage {
   username: string, 
@@ -50,6 +51,8 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
 
   const router = useRouter();
 
+  const [ offset, setOffset ] = useState(page * 2)
+
   useEffect(() => {
     let modal = document.getElementById("addModal");
 
@@ -73,6 +76,16 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
     fetchData().catch(console.error); 
 
   }, [limit])
+
+
+  const handleClickSearch = async(e, pageIndex = 1) => {
+    if (e?.preventDefault) {
+      e?.preventDefault()
+    }
+
+    let queryString = "?"
+    return router.push(`/todos?limit=${limit}&page=${pageIndex}`)
+  }
 
   const closeAddForm = () => {
     let modal = document.getElementById("addModal");    
@@ -109,6 +122,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
 
   return (
     <>
+ 
       <TDHeader username={ username } />
       <TDTitle>List Task items</TDTitle>
 
@@ -223,6 +237,15 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
             </tbody>
           </table> 
  
+          <PaginatedItems 
+            page={ page }
+            itemsPerPage={ limit }
+            total={ total }
+            offset={ offset }
+            setOffset={ setOffset }
+            handleClickSearch={ handleClickSearch }
+            
+          />
 
           { 
           todos.length == 0 && 

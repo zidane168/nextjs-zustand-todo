@@ -13,6 +13,7 @@
     "next-auth": "^4.18.10",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-paginate": "^8.1.4",
     "yup": "^0.32.11",
     "zustand": "^4.3.1"
   },

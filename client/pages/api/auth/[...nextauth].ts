@@ -30,10 +30,7 @@ export default NextAuth({
         if (response?.statusCode === 200) {   // get result from server
           return Promise.resolve(response.params);  // ket qua tra ve tu server se di xuong function jwt ben duoi note lai cai token
 
-        } else {
-
-          console.log('...nextauth')
-          console.log(response)
+        } else { 
           /// flow: api.member => goto here 
           // Return an object that will pass error information through to the client-side.
           throw new Error(

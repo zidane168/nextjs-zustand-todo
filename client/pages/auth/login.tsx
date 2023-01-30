@@ -199,6 +199,11 @@ const loginForm = () => {
           </tr>
 
           <tr>
+            <td> Learn <span className="required-star">NestJS structure </span>  </td> 
+            <td> Learn <span className="required-star">NextJS structure </span> and build component  </td>
+          </tr>
+
+          <tr>
             <td>  </td>
             <td> Use <span className="required-star">Yup Validation Select/Option Yup with Field </span>  <br/> 
             
