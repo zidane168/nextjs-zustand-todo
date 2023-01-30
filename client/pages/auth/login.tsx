@@ -63,6 +63,9 @@ const loginForm = () => {
           password: values["password"],
         })
           .then((result) => { 
+            console.log('auth/login')
+            console.log(result)
+
             if (!result.error) {
               setMessage({
                 isError: false,

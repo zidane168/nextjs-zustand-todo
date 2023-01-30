@@ -17,7 +17,8 @@ export const apiGetTodos = async(
         const data = response.data; 
         return data;
     } catch (error) {
-        return error?.message; 
+        const err = error as AxiosError
+        return err?.response?.data
     }
 }
 
@@ -37,7 +38,8 @@ export const apiMarkCompleteTodo = async(
         const data = response.data;
         return data;
     } catch (error) {
-        return error?.message; 
+        const err = error as AxiosError
+        return err?.response?.data
     }
 }
 
@@ -57,9 +59,8 @@ export const apiRemoveTodo = async(
         const data = response.data;
         return data;
     } catch (error) {
-        // const err = error as AxiosError
-        // return err?.response?.data
-        return error?.message; 
+        const err = error as AxiosError
+        return err?.response?.data
     }
 }
 
@@ -85,6 +86,7 @@ export const apiAddTodo = async(
         const data = response.data
         return data;
     } catch(error) {
-        return error?.message; 
+        const err = error as AxiosError
+        return err?.response?.data
     }
 } 

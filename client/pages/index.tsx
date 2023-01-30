@@ -20,7 +20,7 @@ const Home: NextPage = () => {
         </h1> 
         <h1 className="text-6xl font-bold mt-4">
           Check My
-          <a href="/todos/" className="text-blue-600"> TodoList </a>        
+          <a href="/auth/login" className="text-blue-600"> TodoList </a>        
         </h1> 
       </main>
 

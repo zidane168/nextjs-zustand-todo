@@ -61,6 +61,9 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
 
     const fetchData = async () => {
       const items = await fetchTodos(accessToken);  // call api from Zustand state
+
+      console.log(items)
+      
     
       if (!items) {
         router.push(ROUTES.LOGIN)

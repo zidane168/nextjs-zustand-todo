@@ -32,6 +32,8 @@ export default NextAuth({
 
         } else {
 
+          console.log('...nextauth')
+          console.log(response)
           /// flow: api.member => goto here 
           // Return an object that will pass error information through to the client-side.
           throw new Error(

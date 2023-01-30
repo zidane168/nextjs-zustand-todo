@@ -22,6 +22,8 @@ export const registerMember = async(
         return data;
 
     } catch (error) { 
+        console.log('...api.member')
+        console.log(error)
         return error;
     }
 
