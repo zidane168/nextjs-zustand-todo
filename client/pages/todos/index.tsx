@@ -191,9 +191,9 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
                     <td className={statusStyle}> {item.status} </td>
                     <td>
                       <div className="flex space-x-2">
-                        <button className="warning ">
+                        {/* <button className="warning ">
                           <TDEditIcon bgColor="#FFF" width={ 20 } />
-                        </button>
+                        </button> */}
 
                         <button
                           className="danger"

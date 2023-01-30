@@ -1,4 +1,3 @@
-import { ITodo } from './interface/todos.interface';
 import { TodosDto } from './dto/todos.dto';
 import {
   Controller,
@@ -10,10 +9,10 @@ import {
   Param,
   Delete,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import { TodosSchema } from './schemas/todos.schema';
 
 @Controller('todos')
 export class TodosController {
@@ -27,12 +26,22 @@ export class TodosController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post()
-  public async create(
+  @Get('search')
+  public async search(
     @Request() req: any,
-    @Body() todosDto: TodosDto
+    @Query('limit') limit: number,
+    @Query('page') page: number,
+    @Query('job') job: string,
+    @Query('type') type: number,
+    @Query('status') status: string
   ) {
     
+    return await this.todosService.search(req.user.params.username, limit, page, job, type, status);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  public async create(@Request() req: any, @Body() todosDto: TodosDto) {
     return await this.todosService.create(todosDto, req.user.params.username);
   }
 

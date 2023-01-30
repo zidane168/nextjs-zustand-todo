@@ -11,6 +11,58 @@ import { ApiErrorResponse } from './../util/api-error-response.util';
 export class TodosService {
   constructor(@InjectModel('Todo') private readonly todoModel: Model<ITodo>) {}
 
+  public async search(
+    username: string,
+    limit: number, 
+    page: number, 
+    job: string,
+    type: number,
+    status: string
+  ) { 
+
+    let conditions: any
+
+    if (username) {
+      conditions = { username };
+    }
+ 
+    if (job) {
+      conditions = { ...conditions, job: { $regex: '.*' + job + '.*' } };   // search like
+    } 
+ 
+    if (type)  {
+      conditions = { ...conditions, type };
+    }
+ 
+    if (status) {
+      status = status.toUpperCase();
+      conditions = { ...conditions, status };
+    }
+   
+    const total:number = await this.todoModel.count( conditions ).exec()
+
+    if (total == 0) {
+      return new ApiSucceedResponse('No Task!', []);
+    }
+
+    console.log(conditions)
+
+    const todo = await this.todoModel
+      .find(conditions)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .exec() 
+
+    if (!todo) {
+      throw new HttpException('Todo not found', 404);
+    }
+
+    return new ApiSucceedResponse('Retrieved data successfully', {
+      total: total,
+      todos: todo,
+    });
+  }
+
   public async get(username: string) {
  
     const todos: TodosDto[] = await this.todoModel.find({
