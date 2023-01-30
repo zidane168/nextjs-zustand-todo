@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { ROUTES } from "../../utils/contants";
 import { ToastMessage } from "../../components/TDToastMessage";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 const loginForm = () => {
   const { is_password, changeEye } = useStore();
@@ -41,6 +42,9 @@ const loginForm = () => {
     <h6 className="font-bold mt-2 text-center">
       huuvi168@gmail.com 
     </h6> 
+    <div className="text-center bg-orange-700 text-white p-4">
+        LOGIN INTO TODO APPS
+    </div>
     <Formik
       initialValues={{ username: "", password: "" }}
       validationSchema={Yup.object({
@@ -58,9 +62,7 @@ const loginForm = () => {
           username: values["username"],
           password: values["password"],
         })
-          .then((result) => {
-            console.log('-------- ');
-            console.log(result);
+          .then((result) => { 
             if (!result.error) {
               setMessage({
                 isError: false,
@@ -80,7 +82,7 @@ const loginForm = () => {
     >
       <Form>
         <div className="flex item-center">
-          <div className="bg-sky-200 p-[10px] rounded-lg mx-auto w-[500px]  mt-[100px]">
+          <div className="bg-sky-200 p-[10px] rounded-lg mx-auto w-[500px]  mt-[50px]">
             <div>
               <label
                 htmlFor="username"
@@ -129,8 +131,10 @@ const loginForm = () => {
               >
                 Login
               </button>
-              <button className="bg-yellow-300 px-4 py-2 rounded-md text-[#00F] font-bold">
-                Register
+              <button type="button" className=" px-4 py-2 rounded-md text-[#00F] font-bold">
+                <Link href="/auth/register">
+                  I don't have account
+                </Link>
               </button>
             </div>
           </div>
@@ -176,17 +180,35 @@ const loginForm = () => {
             <td> Apply <span className="required-star"> EnvConfig, Apply Formik, yup </span></td>
           </tr>
           <tr>
-            <td>  </td>
+            <td> ApiSucceedResponse / throw new HttpException("Error", 404) </td>
             <td> CSS use <span className="required-star"> TailWindCSS </span> </td>
           </tr>
           <tr>
-            <td>  </td>
+            <td> Use Moment Convert to DateTime (Server/Client) </td>
             <td> Use <span className="required-star">SVG icon from iconfinder </span> </td>
           </tr>
           <tr>
             <td>  </td>
             <td> Use <span className="required-star">Axios </span> Make API Call </td>
           </tr>
+
+          <tr>
+            <td>  </td>
+            <td> Use <span className="required-star">Yup Validation Select/Option Yup with Field </span>  <br/> 
+            
+              {'<Field name="type" as="select"> <option></option> </Field>'}
+            </td>
+          </tr>
+
+          <tr>
+            <td>  </td>
+            <td> Use <span className="required-star">Yup Validation confirmPassword </span>    
+                confirmPassword: Yup.string()
+                  .required("Confirm password is Required")
+                  .oneOf([Yup.ref("password"), null], "Confirm Password and Password mismatch")   
+            </td>
+          </tr>
+        
         </tbody>
       </table>
     </div>

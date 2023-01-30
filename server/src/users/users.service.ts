@@ -44,6 +44,16 @@ export class UsersService {
   }
 
   public async register(newUser: UsersDto) {
+
+    // check exist
+    const checkExist = await this.userModel.findOne({
+      username: newUser.username
+    }).exec()
+    
+    if (checkExist) {
+      throw new HttpException(`username ${newUser.username} is Exist`, 404)
+    }
+
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(newUser.password, salt);
 
