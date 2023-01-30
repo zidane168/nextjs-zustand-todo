@@ -6,6 +6,5 @@ export class TodosDto {
   dueDate: Date;
   job: string;
   status: string;
-  page: number;
-  limit: number;
+  remark: string;
 }

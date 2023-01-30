@@ -8,4 +8,5 @@ export const TodosSchema = new mongoose.Schema({
   dueDate: Date,
   job: String,
   status: String,
+  remark: String,
 });

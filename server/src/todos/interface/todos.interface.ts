@@ -6,6 +6,7 @@ export interface ITodo extends Document {
   type: number;
   createDate: Date;
   dueDate: Date;
+  remark: string;
   job: string;
   status: string;
 }

@@ -88,28 +88,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
       modal.style.display = "block";
     }
   };
-
-  const add = async() => {
-    let item:ITodoState = { 
-
-      job: job?.current?.value ? (job?.current?.['value']) as string : ' ',
-     // type: (document.getElementById("Type") as HTMLInputElement).value,    // get value
-      type: (document.getElementById("Type") as HTMLInputElement)?.selectedIndex,   // get index
-      dueDate: dueDate?.current?.value ?  (dueDate?.current?.['value']) as string :'',
-      remark: remark?.current?.value ? (remark?.current?.['value']) as string : '',
-    };
-    let result = await addTodo(accessToken, item);
-    let isError = false;
-    if (result?.statusCode !== 200) {
-      isError = true; 
-    } 
-
-    setMessage({
-      isError: isError,
-      msg: result?.message
-    }) 
-    
-  };
+ 
 
   const markCompleteFunc = (id: string, index: number) => { 
     markCompleteTodo(accessToken, id, index); // call Zustand state
@@ -232,17 +211,15 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
 
 
         <div id="addModal" className="modal">
-            <div className="modal-content" id="modal-content">
-              <div className="modal-header">
-                  <h2>Add Items</h2>
-                  <span className="close" onClick={() => closeAddForm()}>
-                  &times;
-                  </span>
-              </div>
-              <div className="modal-body">
-
-              <Formik 
-                
+          <div className="modal-content" id="modal-content">
+            <div className="modal-header">
+                <h2>Add Items</h2>
+                <span className="close" onClick={() => closeAddForm()}>
+                &times;
+                </span>
+            </div>
+            <div className="modal-body"> 
+              <Formik  
                 initialValues={{ job: "", type: "", remark: "", dueDate: "" }}
                 validationSchema={Yup.object({
                   job: Yup.string()
@@ -262,21 +239,36 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
                   dueDate: Yup.string()                    
                     .required("DueDate is Required")
                 })}
-                onSubmit={(values, { setSubmitting }) => {
-                   console.log(values)
+                onSubmit={ async(values, { setSubmitting }) => {
+                 
+                  let item:ITodoState = { 
 
-                  alert(JSON.stringify(values))
+                    job: values['job'],                
+                    type: values['type'],
+                    dueDate: values['dueDate'],
+                    remark: values['remark'],
+                  };
+                  let result = await addTodo(accessToken, item);
+                  let isError = false;
+                  if (result?.statusCode !== 200) {
+                    isError = true; 
+                  } 
+              
+                  setMessage({
+                    isError: isError,
+                    msg: result?.message
+                  }) 
           
                 }}
               >
-                 
+                  
                 <Form>
                   <div className="bg-sky-300 shadow-lg p-4 container w-[500px] mx-auto rounded-md"> 
                     <div>
                         <label  htmlFor="job" className="flex items-center text-right font-bold uppercase text-sky-600"> 
                           Job Name <span className="required-star"> (*) </span>  
                         </label>
-                        <Field name="job" type="text" placeHolder="Learn NextJS in Tet Holiday" />                        
+                        <Field name="job" type="text" placeholder="Learn NextJS in Tet Holiday" />                        
                         <div className="error-message">  
                           <ErrorMessage name="job"/>
                         </div>
@@ -298,7 +290,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
                         <label  htmlFor="job" className="flex items-center text-right font-bold uppercase text-sky-600"> 
                           Due Date: <span className="required-star"> (*) </span> 
                         </label>
-                        <Field name="dueDate" type="date" min={ today } placeHolder="Learn NextJS in Tet Holiday" />                        
+                        <Field name="dueDate" type="date" min={ today } placeholder="Learn NextJS in Tet Holiday" />                        
                         <div className="error-message">  
                           <ErrorMessage name="dueDate"/>
                         </div>
@@ -307,7 +299,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
                         <label  htmlFor="remark" className="flex items-center text-right font-bold uppercase text-sky-600"> 
                           Remark: 
                         </label>
-                        <Field name="remark" type="text" placeHolder="Remark for NextJS Job" />                        
+                        <Field name="remark" type="text" placeholder="Remark for NextJS Job" />                        
                         <div className="error-message">  
                           <ErrorMessage name="remark"/>
                         </div>
@@ -319,28 +311,10 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
                   </div>
                 </Form> 
               </Formik>
-              </div>
             </div>
+          </div>
         </div>
-
-        {/* <div id="deleteModal" className="modal">
-            <div className="modal-content" id="modal-content">
-              <div className="modal-header">
-                  <h2>Delete Items</h2>
-                  <span className="close" onClick={() => closeDeleteForm()}>
-                  &times;
-                  </span>
-              </div>
-              <div className="modal-body">
-                  <div className="bg-sky-300 shadow-lg p-4 container w-[500px] mx-auto rounded-md"> 
-                    Do you want to delete this items? 
-                    <div className="mt-4 text-right">
-                      <button onClick={add}> Add Todos Items </button>
-                    </div>
-                  </div>
-              </div>
-            </div>
-        </div> */}
+ 
 
       </div>
       <TDFooter />
