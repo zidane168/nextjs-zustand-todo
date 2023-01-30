@@ -230,3 +230,13 @@
      bottom: 20px;
    }
  }
+
+ /* control */
+
+ input[type='text'], input[type='password'] {
+  @apply p-2 w-full rounded-full mb-2
+ }
+
+ .error-message {
+  @apply text-red-600 font-extrabold mb-2
+ }

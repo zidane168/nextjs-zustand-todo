@@ -16,8 +16,11 @@ const Home: NextPage = () => {
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         <h1 className="text-6xl font-bold">
-          Welcome to <a href="https://learn-tech-tips.blogspot.com" className="text-blue-600"> Learn Tech Tips - Zidane </a>
-        
+          Welcome to <a href="https://learn-tech-tips.blogspot.com" className="text-blue-600"> Learn Tech Tips - Zidane </a>        
+        </h1> 
+        <h1 className="text-6xl font-bold mt-4">
+          Check My
+          <a href="/todos/" className="text-blue-600"> TodoList </a>        
         </h1> 
       </main>
 

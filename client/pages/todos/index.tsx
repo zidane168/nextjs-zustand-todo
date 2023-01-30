@@ -287,6 +287,25 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
             </div>
         </div>
 
+        {/* <div id="deleteModal" className="modal">
+            <div className="modal-content" id="modal-content">
+              <div className="modal-header">
+                  <h2>Delete Items</h2>
+                  <span className="close" onClick={() => closeDeleteForm()}>
+                  &times;
+                  </span>
+              </div>
+              <div className="modal-body">
+                  <div className="bg-sky-300 shadow-lg p-4 container w-[500px] mx-auto rounded-md"> 
+                    Do you want to delete this items? 
+                    <div className="mt-4 text-right">
+                      <button onClick={add}> Add Todos Items </button>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div> */}
+
       </div>
       <TDFooter />
     </>
