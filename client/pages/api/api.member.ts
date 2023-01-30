@@ -2,6 +2,31 @@ import { AxiosError } from 'axios';
 import axiosClient from '../../utils/axiosClient';
 import { envConfig } from './../../utils/config'; 
 
+
+export const registerMember = async(
+    username: string,
+    password: string
+) => {
+    let url = `${envConfig.API_PATH}/users/register`
+
+    try {
+        const response = await axiosClient({
+            method: "POST",
+            url, 
+            data: {
+                username, password
+            }
+        })
+
+        const data = response.data;
+        return data;
+
+    } catch (error) { 
+        return error;
+    }
+
+}
+
 export const loginMember = async(
     username: string,
     password: string
@@ -22,8 +47,7 @@ export const loginMember = async(
 
     } catch (error) {
         console.log( error )      // { statusCode: 404, message: 'User not fou
-        
-        console.log(error)
+         
         return error?.message; 
     }
 
@@ -43,7 +67,7 @@ export const getProfile = async(
         const data = response.data; 
         return data;
     } catch (error) {
-        const err = error as AxiosError
-        return err?.response?.data
+        // const err = error as AxiosError
+        return error?.message; 
     }
 }

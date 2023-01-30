@@ -10,9 +10,9 @@ import { useRouter } from "next/router";
 import { ROUTES } from "../../utils/contants";
 import { ToastMessage } from "../../components/TDToastMessage"; 
 import Link from "next/link";
+import { registerMember } from "../api/api.member";
 
-const loginForm = () => {
-  const { is_password, changeEye } = useStore();
+const loginForm = () => { 
 
   const router = useRouter();
 
@@ -54,9 +54,18 @@ const loginForm = () => {
             .required("Confirm password is Required")
             .oneOf([Yup.ref("password"), null], "Confirm Password and Password mismatch")
       })}
-      onSubmit={(values, { setSubmitting }) => { 
+      onSubmit={ async(values, { setSubmitting }) => { 
 
-       
+        let result = await registerMember(values['username'], values['password']);
+        let isError = false;
+        if (result?.statusCode !== 200) {
+          isError = true; 
+        } 
+     
+        setMessage({
+          isError: isError,
+          msg: result.message 
+        }) 
       }}
     >
       <Form>
@@ -86,7 +95,7 @@ const loginForm = () => {
               <div>
                 <Field
                   name="password"
-                  type={is_password ? "password" : "text"} // formik, up ko can value, ko can onchange
+                  type="password"
                 /> 
               </div>
               <div className="error-message">
@@ -105,7 +114,7 @@ const loginForm = () => {
               <div>
                 <Field
                   name="confirmPassword"
-                  type={is_password ? "password" : "text"} // formik, up ko can value, ko can onchange
+                  type="password"
                 /> 
               </div>
               <div className="error-message">
