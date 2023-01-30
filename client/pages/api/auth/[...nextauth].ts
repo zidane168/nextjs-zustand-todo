@@ -31,9 +31,11 @@ export default NextAuth({
           return Promise.resolve(response.params);  // ket qua tra ve tu server se di xuong function jwt ben duoi note lai cai token
 
         } else {
+
+          /// flow: api.member => goto here 
           // Return an object that will pass error information through to the client-side.
           throw new Error(
-            JSON.stringify({ message: response?.message, status: false })
+            JSON.stringify({ message: response, status: false })
           );
         }
       },

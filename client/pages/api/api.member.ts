@@ -19,9 +19,12 @@ export const loginMember = async(
 
         const data = response.data;
         return data;
+
     } catch (error) {
-        const err = error as AxiosError
-        return err?.response?.data
+        console.log( error )      // { statusCode: 404, message: 'User not fou
+        
+        console.log(error)
+        return error?.message; 
     }
 
 }

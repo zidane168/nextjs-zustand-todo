@@ -36,7 +36,7 @@ export class UsersService {
 
     const isMatch = await bcrypt.compare(user.password, result.password);
     if (!isMatch) {
-      return new ApiErrorResponse('Password is not match', []);
+      throw new HttpException('Password is not match', 404);
     }
  
     const access_token = await this.jwtService.sign({ id: result._id });

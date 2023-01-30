@@ -1,12 +1,36 @@
 import Link from 'next/link'
+import { useEffect, useState } from 'react';
 import { ROUTES } from './../utils/contants'
-
+import { signOut, useSession } from "next-auth/react"
+import { useRouter } from 'next/router';
 
 interface IHeader {
     username: string;
 }
 
 export default function TDHeader({ username } : IHeader) {
+
+    const [ openMenu, setOpenMenu ] = useState(false);    
+
+    const { data: session, status }  = useSession()
+
+    const router = useRouter();
+         
+ 
+    const handleClick = () => {        
+        const child = document.getElementById('welcome-child');
+       
+        if (!openMenu) {
+            child?.classList.remove("hidden")
+            child?.classList.add("block")
+        } else {
+            child?.classList.add("hidden")
+            child?.classList.remove("block")
+        } 
+
+        setOpenMenu(!openMenu)
+    }
+
     return (
         <div className="bg-sky-500 p-[20px] w-full flex justify-between text-white">
             <div className="flex space-x-8">
@@ -22,8 +46,17 @@ export default function TDHeader({ username } : IHeader) {
                 </div>
             </div>
             <div className="flex">
-                <div> Welcome: { username ? username : '<cannot get name>' }</div>
+                <ul id="welcome"> 
+                    <li  className='cursor-pointer relative' onClick={ handleClick }>Welcome: { username ? username : '<cannot get name>' } 
+                        <ul id="welcome-child" className="hidden absolute bg-orange-400 px-4 py-2 text-white" >
+                            <li onClick={ () => signOut() }> Logout </li>
+                        </ul>
+                    </li>
+                </ul>
+                
+               
             </div>
+            
         </div>
     )
 }

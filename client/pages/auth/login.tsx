@@ -23,16 +23,24 @@ const loginForm = () => {
     msg: "",
   });
 
-  const handleLoggedIn = async () => {
+  const handleAccessTodoPages = async () => {
     await router.push(ROUTES.TODO_LIST);
   };
 
   // // call login when session change
   // useEffect(() => {
-  //   session?.accessToken && handleLoggedIn()
+  //   session?.accessToken && handleAccessTodoPages()
   // }, [session])
 
   return (
+
+    <> 
+    <h3 className="font-bold text-center mt-4">
+        Welcome to Todo List management by <a href="https://learn-tech-tips.blogspot.com" className="text-blue-600"> Learn Tech Tips - Zidane </a>        
+    </h3> 
+    <h6 className="font-bold mt-2 text-center">
+      huuvi168@gmail.com 
+    </h6> 
     <Formik
       initialValues={{ username: "", password: "" }}
       validationSchema={Yup.object({
@@ -51,17 +59,19 @@ const loginForm = () => {
           password: values["password"],
         })
           .then((result) => {
+            console.log('-------- ');
             console.log(result);
             if (!result.error) {
               setMessage({
                 isError: false,
                 msg: "Success",
               });
-            } else {
+            } else { 
+
               let rel = JSON.parse(result.error);
               setMessage({
                 isError: true,
-                msg: rel?.message ?? "",
+                msg: rel?.message,
               });
             }
           })
@@ -130,11 +140,59 @@ const loginForm = () => {
           <ToastMessage
             message={message}
             setMessage={setMessage}
-            afterSuccess={handleLoggedIn} // if login succeed will auto redirect
+            afterSuccess={handleAccessTodoPages} // if login succeed will auto redirect
           />
         </div>
       </Form>
     </Formik>
+
+    <div className="flex text-center mx-auto flex w-[1000px]">
+      <table className="table">
+        <thead>
+          <tr>
+            <th> Server </th>
+            <th> Client </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> Use NestJS - <span className="required-star"> Moogoose </span>DB connect </td>
+            <td> Use NextJS - <span className="required-star"> Zustand Management State </span> with API call</td>
+          </tr>
+          <tr>
+            <td> NestJS - 2 Table  <span className="required-star">  Todos, User </span> => Create, Update, Delete, Edit Feature </td>
+            <td> NextJS - UI with  <span className="required-star"> Add, Update, Delete, Show, Login, Logout </span> </td>
+          </tr>
+          <tr>
+            <td>  <span className="required-star"> Pagination </span> with moogoose </td>
+            <td> Add  <span className="required-star">  ToastMessage </span> Component</td>
+          </tr>
+          <tr>
+            <td> Apply  <span className="required-star">  JWT Authentication </span> </td>
+            <td> Apply  <span className="required-star"> NextJS next/auth </span></td>
+          </tr>
+          <tr>
+            <td> <span className="required-star">Search with regex, pagination </span>on Server on mongoose query </td>
+            <td> Apply <span className="required-star"> EnvConfig, Apply Formik, yup </span></td>
+          </tr>
+          <tr>
+            <td>  </td>
+            <td> CSS use <span className="required-star"> TailWindCSS </span> </td>
+          </tr>
+          <tr>
+            <td>  </td>
+            <td> Use <span className="required-star">SVG icon from iconfinder </span> </td>
+          </tr>
+          <tr>
+            <td>  </td>
+            <td> Use <span className="required-star">Axios </span> Make API Call </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+ 
+    
+    </>
   );
 };
 
