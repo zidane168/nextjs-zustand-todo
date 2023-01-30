@@ -21,9 +21,7 @@ export const registerMember = async(
         const data = response.data;
         return data;
 
-    } catch (error) { 
-        console.log('...api.member')
-        console.log(error)
+    } catch (error) {  
         return error;
     }
 
@@ -48,8 +46,7 @@ export const loginMember = async(
         return data;
 
     } catch (error) {
-        console.log( error )      // { statusCode: 404, message: 'User not fou
-         
+        console.log( error )      // { statusCode: 404, message: 'User not foud 
         return error?.message; 
     }
 

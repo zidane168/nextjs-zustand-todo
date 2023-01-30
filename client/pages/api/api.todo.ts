@@ -22,6 +22,54 @@ export const apiGetTodos = async(
     }
 }
 
+
+export const apiSearchTodos = async(
+    accessToken: string,
+    limit: number,
+    page: number, 
+    job: string, 
+    type: number,
+    status: string,
+) => { 
+    let url = `${envConfig.API_PATH}/todos/search?page=${page}&limit=${limit}` 
+    try {  
+        axiosClient.defaults.headers.common = {'Authorization': `bearer ${accessToken}`}
+ 
+        if (type !== 0) {
+            url = `${url}&type=${type}`
+        }  
+
+        if (job) {
+            url = `${url}&job=${job}`
+        }  
+
+        if (status) {
+            status = status.toUpperCase()
+            url = `${url}&status=${status}`
+        }  
+         
+ 
+        const response = await axiosClient({
+            method: "GET",
+            url,    
+        })
+         
+
+        const data = response.data; 
+
+        console.log('data from api response!')
+        console.log(data)
+        return data;
+    } catch (error) {
+
+        
+        console.log(error)
+        const err = error as AxiosError
+        return err?.response?.data
+    }
+}
+
+
 export const apiMarkCompleteTodo = async(
     accessToken: string, 
     id: string

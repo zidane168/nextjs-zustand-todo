@@ -3,13 +3,14 @@ import { devtools } from 'zustand/middleware'
 import { IItem, ITodoState } from './../../utils/interface'
 import { ROUTES, STATUS } from './../../utils/contants'
 import moment from 'moment';
-import { apiAddTodo, apiGetTodos, apiMarkCompleteTodo, apiRemoveTodo } from '../../pages/api/api.todo';
+import { apiAddTodo, apiGetTodos, apiMarkCompleteTodo, apiRemoveTodo, apiSearchTodos } from '../../pages/api/api.todo';
 import { useRouter } from 'next/router';
 
 
 interface IListTodoState {
+    total: number,
     todos: Array<ITodoState>; 
-    fetchTodos: (accessToken: string) => number;        // return statusCode for unauthorization
+    fetchTodos: (accessToken: string, limit: number, page: number, job: string, type: number, status: string) => number;        // return statusCode for unauthorization
     types: Array<IItem>;
     addTodo: (accessToken: string, item: ITodoState) => void;
     markCompleteTodo: (accessToken: string, id: number, index: number) => void;
@@ -17,12 +18,19 @@ interface IListTodoState {
 }
 
 const store = (set:any, get:any) => ({
+    total: 0,
     todos: [],
-    fetchTodos: async(accessToken: string) => {  
-        const items = await apiGetTodos(accessToken)
+    fetchTodos: async(accessToken: string, limit: number, page: number, job: string, type: number, status: string) => {  
+        // const items = await apiGetTodos(accessToken)
+        const items = await apiSearchTodos(accessToken, limit, page, job, type, status) 
+
+        console.log(items)
 
         if (items?.statusCode == 200) {
-            await set({ todos: items.params }) 
+            await set({ 
+                total: items.params.total,
+                todos: items.params.todos  
+            }) 
         }  
  
         return items 

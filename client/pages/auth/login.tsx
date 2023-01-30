@@ -157,6 +157,9 @@ const loginForm = () => {
       <table className="table">
         <thead>
           <tr>
+            <th colSpan={2}> WHAT YOU CAN LEARN ON THIS PROJECT? </th>
+          </tr>
+          <tr>
             <th> Server </th>
             <th> Client </th>
           </tr>
@@ -191,7 +194,7 @@ const loginForm = () => {
             <td> Use <span className="required-star">SVG icon from iconfinder </span> </td>
           </tr>
           <tr>
-            <td>  </td>
+            <td> Know how to use <span className="required-star">@Body, @Param, @Query </span></td>
             <td> Use <span className="required-star">Axios </span> Make API Call </td>
           </tr>
 
@@ -212,6 +215,14 @@ const loginForm = () => {
             </td>
           </tr>
         
+          <tr>
+            <td>  </td>
+            <td> Understand how to call <span className="required-star">API with Get, Post (passing param) </span> ex: GET with params:  let url = todos/search?page=page&limit=limit` 
+            </td>
+          </tr>
+        
+
+         
         </tbody>
       </table>
     </div>

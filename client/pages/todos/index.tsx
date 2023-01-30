@@ -35,7 +35,7 @@ interface IPackage {
 
 
 export default function Todo({ username, lstTodo, accessToken }: IPackage) {
-  const { todos, types, addTodo, removeTodo, markCompleteTodo, fetchTodos } = useTodoStore();
+  const { total, todos, types, addTodo, removeTodo, markCompleteTodo, fetchTodos } = useTodoStore();
 
   // ToastMessage
   const [message, setMessage] = useState({
@@ -43,12 +43,10 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
     msg: "",
   });
 
-  const today = moment().format("YYYY-MM-DD");
+  const today = moment().format("YYYY-MM-DD"); 
 
-  const id = useRef<any>();
-  const job = useRef<any>();
-  const dueDate = useRef<any>();
-  const remark = useRef<any>();
+  const [ limit, setLimit ] = useState(2);            // limit display on this page (10, 20, 50)
+  const [ page, setPage ] = useState(1);              // current page showing 
 
   const router = useRouter();
 
@@ -59,20 +57,22 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
       modal.style.display = "none";
     }
 
-    const fetchData = async () => {
-      const items = await fetchTodos(accessToken);  // call api from Zustand state
+  
+  }, [])    // call 1 time after load
 
-      console.log(items)
-      
+  useEffect(() => {
     
-      if (!items) {
+    const fetchData = async () => { 
+      const items = await fetchTodos(accessToken, limit, page, "", 0, "");  // call api from Zustand state
+ 
+      if (!items || items?.params?.total == 0) {
         router.push(ROUTES.LOGIN)
       }
     }
 
-    fetchData().catch(console.error);
-  
-  }, [])    // call 1 time after load
+    fetchData().catch(console.error); 
+
+  }, [limit])
 
   const closeAddForm = () => {
     let modal = document.getElementById("addModal");    
@@ -101,6 +101,12 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
     removeTodo(accessToken, id);  // call Zustand state
   }
 
+
+  // change the number of row
+  const handleDisplayClick = (e: any) => {  
+    setLimit(e.target.value)
+  }
+
   return (
     <>
       <TDHeader username={ username } />
@@ -116,6 +122,17 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
         </div>
         <div className="w-full">
          
+          <div>
+            <label className="uppercase">
+              Display: 
+            </label>
+            <select name="display" className="bg-slate-100 p-2 w-[200px]" onClick={ (e) => handleDisplayClick(e) }>
+              <option value="2"> 2 rows</option>
+              <option value="10"> 10 rows</option>
+              <option value="50"> 50 rows</option>
+            </select>
+          </div>
+
           <table className="table">
             <thead>
               <tr>
@@ -205,6 +222,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
               })}
             </tbody>
           </table> 
+ 
 
           { 
           todos.length == 0 && 
