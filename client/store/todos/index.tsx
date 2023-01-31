@@ -12,7 +12,7 @@ interface IListTodoState {
     todos: Array<ITodoState>; 
     fetchTodos: (accessToken: string, limit: number, page: number, job: string, type: number, status: string) => number;        // return statusCode for unauthorization
     types: Array<IItem>;
-    addTodo: (accessToken: string, item: ITodoState) => void;
+    addTodo: (accessToken: string, item: ITodoState, limit: number) => void;
     markCompleteTodo: (accessToken: string, id: number, index: number) => void;
     removeTodo: (accessToken: string, id: string) => void;
 }
@@ -38,14 +38,16 @@ const store = (set:any, get:any) => ({
         {'name': 'Research',    'value': 'Research'},
     ],
 
-    addTodo: async(accessToken: string, item: ITodoState) => {
+    addTodo: async(accessToken: string, item: ITodoState, limit: number) => {
          
         // call API create todo 
         const added = await apiAddTodo(accessToken, item);
         if (added?.statusCode === 200) {
             
             // fetch data
-            return await get().fetchTodos(accessToken)      // fetch data
+            const result = await get().fetchTodos(accessToken, limit, 1, "", 0, "")      // fetch data
+            result.message = added.message  // get back message from add, not search message
+            return result;
         }
     },
 

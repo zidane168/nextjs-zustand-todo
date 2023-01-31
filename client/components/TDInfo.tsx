@@ -31,7 +31,7 @@ interface IInfoProps {
   onClick?: Function;
 }
 export const Info = ({ type, value, className, onClick }: IInfoProps) => {
-  const info = data.find((item) => item.type === type);
+  const info:any = data.find((item) => item.type === type);
 
   return (
     <div
@@ -41,7 +41,7 @@ export const Info = ({ type, value, className, onClick }: IInfoProps) => {
       }
       onClick={() => onClick && onClick()}
     >
-      {!!info?.icon && <Image src={info.icon} alt={icon} />}
+      {!!info?.icon && <Image src={info.icon} alt="icon" />}
       {info?.component}
       <span className={"transition transition-all " + info.color}>
         {info.label || value}

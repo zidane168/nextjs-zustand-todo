@@ -286,7 +286,7 @@ export default function Todo({ username, accessToken }: IPackage) {
                     dueDate: values['dueDate'],
                     remark: values['remark'],
                   };
-                  let result = await addTodo(accessToken, item);
+                  let result = await addTodo(accessToken, item, limit);
                   let isError = false;
                   if (result?.statusCode !== 200) {
                     isError = true; 

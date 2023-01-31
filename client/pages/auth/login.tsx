@@ -231,6 +231,8 @@ const loginForm = () => {
                 <li> /pages/auth/login.tsx => call signIn("credentials") ... </li>
                 <li> /pages/api/auth/...nextauth.ts </li>
                 <li> call loginMember function => /pages/api/api.member.ts</li>
+                <li> /pages/_app.tsx, Component.auth  </li>
+               
               </ul>
             
             </td>

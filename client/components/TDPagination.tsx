@@ -3,15 +3,28 @@ import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import useTrans from "../hooks/useTrans";
 
-export const PaginatedItems = ({ 
-    itemsPerPage = 0,
-    total = 0,
-    offset = 0,
-    setOffset,
-    page,
-    handleClickSearch
+interface IPagination {
+  itemsPerPage: number,
+  total: number,
+  offset: number, 
+  handleClickSearch: any,
+}
 
-}) => {
+
+export const PaginatedItems = ({ 
+  itemsPerPage = 0,
+  total = 0,
+  offset = 0, 
+  handleClickSearch  
+}: IPagination) => {
+
+// export const PaginatedItems = ({ 
+//     itemsPerPage = 0,
+//     total = 0,
+//     offset = 0, 
+//     handleClickSearch 
+
+// }) => {
  
     const { language } = useTrans()
     
@@ -22,7 +35,7 @@ export const PaginatedItems = ({
         setPageCount(Math.ceil(total / itemsPerPage))
     }, [offset, itemsPerPage, total])
 
-    const handlePageClick  = (e) => {
+    const handlePageClick  = (e: any) => {
         handleClickSearch(e, e.selected + 1)
     } 
   
@@ -37,7 +50,6 @@ export const PaginatedItems = ({
           previousLabel={ language.pagination.previous } 
           activeLinkClassName="bg-orange-500 p-4 rounded-md text-white"
           className="flex  justify-center space-x-4 mt-8" 
-          renderOnZeroPageCount={null}
         />
       </>
     );

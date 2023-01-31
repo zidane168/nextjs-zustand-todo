@@ -1,6 +1,12 @@
 import '../styles/globals.css'
 import '../styles/style.css'
 import type { AppProps } from 'next/app'
+import type { NextComponentType  } from 'next' //Import Component type
+
+//Add custom appProp type then use union to add it
+type CustomAppProps = AppProps & {
+  Component: NextComponentType & {auth?: boolean} // add auth type
+}
 
 import { SessionProvider, signIn, useSession  } from 'next-auth/react'
 import { useEffect } from 'react'
@@ -10,7 +16,7 @@ function MyApp({
   pageProps: { session,  ...pageProps },
   router,
 
-}: AppProps) {
+}: CustomAppProps) {
   return (
     <SessionProvider session={ session }>
       { Component.auth ? (
