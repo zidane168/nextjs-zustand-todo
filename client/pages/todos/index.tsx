@@ -4,8 +4,7 @@ import useTodoStore from "./../../store/todos";
 
 import TDHeader from "./../../components/TDHeader";
 import TDFooter from "./../../components/TDFooter";
-import TDTitle from "./../../components/TDTitle";
-import TDCombobox from "./../../components/TDCombobox";
+import TDTitle from "./../../components/TDTitle"; 
 import { ITodoState } from './../../utils/interface'
 
 import { Formik, Field, Form, ErrorMessage } from "formik";
@@ -26,16 +25,15 @@ import { getProfile } from "../api/api.member";
 import { getSession } from "next-auth/react"; 
 import { ToastMessage } from "../../components/TDToastMessage";
 import Router, { useRouter } from "next/router";
-import { PaginatedItems } from "../../components/TDPagination";
+import { PaginatedItems } from "../../components/TDPagination"; 
 
 interface IPackage {
-  username: string, 
-  lstTodo: Array<ITodoState>,
+  username: string,  
   accessToken: string, 
 }
 
-
-export default function Todo({ username, lstTodo, accessToken }: IPackage) {
+export default function Todo({ username, accessToken }: IPackage) {
+  
   const { total, todos, types, addTodo, removeTodo, markCompleteTodo, fetchTodos } = useTodoStore();
 
   // ToastMessage
@@ -59,8 +57,6 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
     if (modal) {
       modal.style.display = "none";
     }
-
-  
   }, [])    // call 1 time after load
 
   useEffect(() => {

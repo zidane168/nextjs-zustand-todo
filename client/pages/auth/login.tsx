@@ -62,9 +62,7 @@ const loginForm = () => {
           username: values["username"],
           password: values["password"],
         })
-          .then((result) => { 
-            console.log('auth/login')
-            console.log(result)
+          .then((result) => {  
 
             if (!result.error) {
               setMessage({
@@ -172,8 +170,8 @@ const loginForm = () => {
             <td> Use NextJS - <span className="required-star"> Zustand Management State </span> with API call</td>
           </tr>
           <tr>
-            <td> NestJS - 2 Table  <span className="required-star">  Todos, User </span> => Create, Update, Delete, Edit Feature </td>
-            <td> NextJS - UI with  <span className="required-star"> Add, Update, Delete, Show, Login, Logout </span> </td>
+            <td> NestJS - 2 Table  <span className="required-star">  Todos, User </span> Create, Update, Delete, Edit Feature </td>
+            <td> NextJS - UI with  <span className="required-star"> Add, Update, Delete, Show, Login, Logout, Register </span> </td>
           </tr>
           <tr>
             <td>  <span className="required-star"> Pagination </span> with moogoose </td>
@@ -196,7 +194,7 @@ const loginForm = () => {
             <td> Use <span className="required-star">SVG icon from iconfinder </span> </td>
           </tr>
           <tr>
-            <td> Know how to use <span className="required-star">@Body, @Param, @Query </span></td>
+            <td> Understand how and when to use <span className="required-star">@Body, @Param, @Query </span>, get data from server side </td>
             <td> Use <span className="required-star">Axios </span> Make API Call </td>
           </tr>
 
@@ -230,11 +228,24 @@ const loginForm = () => {
 
           <tr>
             <td>  </td>
-            <td> Understand how to apply <span className="required-star"> React Pagination Component</span>, how to style combine with <span className="required-star"> Zustand </span> state management  </td>
-          </tr>
-        
-        
+            <td> Understand how to apply <span className="required-star"> React Pagination Component</span>, how to style combine with <span className="required-star"> Zustand </span> state management  <br />
+            components/TDPagination.tsx <br/>
+            pages/todos/index.tsx <br/>
+            use  PaginatedItems  components 
+            
+            </td>
+          </tr> 
 
+          <tr>
+            <td>  </td>
+            <td> Understand how to apply <span className="required-star"> Multi language</span> <br/>
+              hooks/useTrans.ts <br/>
+              next.config.ts <br/>
+              TDHeader.tsx <br/>
+              TDPagination.tsx <br/>
+
+            </td>
+          </tr> 
          
         </tbody>
       </table>

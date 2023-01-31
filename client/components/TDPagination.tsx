@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import useTrans from "../hooks/useTrans";
 
 export const PaginatedItems = ({ 
     itemsPerPage = 0,
@@ -12,6 +13,8 @@ export const PaginatedItems = ({
 
 }) => {
  
+    const { language } = useTrans()
+    
     const [ pageCount, setPageCount ] = useState(0)
 
     useEffect(() => {
@@ -27,11 +30,11 @@ export const PaginatedItems = ({
       <> 
         <ReactPaginate
           breakLabel="..."
-          nextLabel="Next >"
+          nextLabel={ language.pagination.next }
           onPageChange={handlePageClick}
           pageRangeDisplayed={5}
           pageCount={pageCount}
-          previousLabel="< Previous"
+          previousLabel={ language.pagination.previous } 
           activeLinkClassName="bg-orange-500 p-4 rounded-md text-white"
           className="flex  justify-center space-x-4 mt-8" 
           renderOnZeroPageCount={null}
