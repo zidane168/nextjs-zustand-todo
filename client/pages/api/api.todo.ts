@@ -55,15 +55,9 @@ export const apiSearchTodos = async(
         })
          
 
-        const data = response.data; 
-
-        console.log('data from api response!')
-        console.log(data)
+        const data = response.data;  
         return data;
-    } catch (error) {
-
-        
-        console.log(error)
+    } catch (error) {  
         const err = error as AxiosError
         return err?.response?.data
     }

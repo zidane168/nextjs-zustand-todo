@@ -228,9 +228,9 @@ const loginForm = () => {
 
             <td> Apply  <span className="required-star"> NextJS next/auth </span>
               <ul className="ul-guideline-style"> 
-                <li> /pages/auth/login.tsx => call signIn("credentials") ... </li>
+                <li> /pages/auth/login.tsx , call signIn("credentials") ... </li>
                 <li> /pages/api/auth/...nextauth.ts </li>
-                <li> call loginMember function => /pages/api/api.member.ts</li>
+                <li> call loginMember function , /pages/api/api.member.ts</li>
                 <li> /pages/_app.tsx, Component.auth  </li>
                
               </ul>

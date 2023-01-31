@@ -4,11 +4,11 @@ export interface IItem {
 }
 
 export interface ITodoState {
-    _id: string; 
+    _id?: string; 
     job: string;
-    type: string; 
+    type: number; 
     remark: string;
     dueDate: string;
     status?: string;
-    created?: string;
+    createDate?: string;
 }

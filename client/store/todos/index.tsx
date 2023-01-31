@@ -8,12 +8,12 @@ import { useRouter } from 'next/router';
 
 
 interface IListTodoState {
-    total: number,
-    todos: Array<ITodoState>; 
-    fetchTodos: (accessToken: string, limit: number, page: number, job: string, type: number, status: string) => number;        // return statusCode for unauthorization
+    total: number;
+    todos: Array<ITodoState>;
+    fetchTodos:  (accessToken: string, limit: number, page: number, job: string, type: number, status: string) => any;        // return statusCode for unauthorization
     types: Array<IItem>;
     addTodo: (accessToken: string, item: ITodoState, limit: number) => void;
-    markCompleteTodo: (accessToken: string, id: number, index: number) => void;
+    markCompleteTodo: (accessToken: string, id: string, index: number) => void;
     removeTodo: (accessToken: string, id: string) => void;
 }
 
@@ -22,7 +22,7 @@ const store = (set:any, get:any) => ({
     todos: [],
     fetchTodos: async(accessToken: string, limit: number, page: number, job: string, type: number, status: string) => {  
         // const items = await apiGetTodos(accessToken)
-        const items = await apiSearchTodos(accessToken, limit, page, job, type, status) 
+        const items:any = await apiSearchTodos(accessToken, limit, page, job, type, status) 
    
         if (items?.statusCode == 200) {
             await set({ 

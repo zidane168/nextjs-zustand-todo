@@ -45,9 +45,9 @@ export const loginMember = async(
         const data = response.data;
         return data;
 
-    } catch (error) {
+    } catch (error: any) {
         console.log( error )      // { statusCode: 404, message: 'User not foud 
-        return error?.message; 
+        return error.message
     }
 
 }
@@ -65,7 +65,7 @@ export const getProfile = async(
 
         const data = response.data; 
         return data;
-    } catch (error) {
+    } catch (error: any) {
         // const err = error as AxiosError
         return error?.message; 
     }

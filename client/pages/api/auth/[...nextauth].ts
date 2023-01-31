@@ -6,14 +6,14 @@ import { loginMember } from "../api.member";
 
 export default NextAuth({
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_SECRET_KEY,
-    }),
-    FacebookProvider({
-      clientId: process.env.FB_CLIENT_ID,
-      clientSecret: process.env.FB_SECRET_KEY,
-    }),
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_CLIENT_ID,
+    //   clientSecret: process.env.GOOGLE_SECRET_KEY,
+    // }),
+    // FacebookProvider({
+    //   clientId: process.env.FB_CLIENT_ID,
+    //   clientSecret: process.env.FB_SECRET_KEY,
+    // }),
     CredentialsProvider({
       id: "credentials",
       name: "TodoList Account",
@@ -74,8 +74,8 @@ export default NextAuth({
       }
       return Promise.resolve(token);
     },
-    async session({ session, token }) {   
-      session.accessToken = token.accessToken; 
+    async session({ session, token } : any) {   
+      session.accessToken = token.accessToken;        
       return Promise.resolve(session);
     },
   },

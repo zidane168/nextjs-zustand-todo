@@ -61,7 +61,7 @@ export default function Todo({ username, accessToken }: IPackage) {
   useEffect(() => {
     
     const fetchData = async () => { 
-      const items = await fetchTodos(accessToken, limit, page, "", 0, "");  // call api from Zustand state
+      const items:any = await fetchTodos(accessToken, limit, page, "", 0, "");  // call api from Zustand state
  
       if (!items || items?.params?.total == 0) {
         router.push(ROUTES.LOGIN)
@@ -179,7 +179,7 @@ export default function Todo({ username, accessToken }: IPackage) {
                 }
 
                 let typeStyle = "home";
-                if (item.type === "Research") {
+                if (item.type === 2) {
                   typeStyle = "research";
                 }
 
@@ -188,7 +188,7 @@ export default function Todo({ username, accessToken }: IPackage) {
                     <td> {index+1} </td>
                     <td> {item.job} </td>
                     <td> 
-                      <span className={typeStyle}> </span> {item.type === 1 ? 'Home' : 'Research'} 
+                      <span className={typeStyle}> </span> {item.type == 1 ? 'Home' : 'Research'} 
                     </td>
                     <td> {item.remark} </td> 
                     <td> { moment(item.createDate).format("YYYY-MM-DD HH:mm:ss") } </td> 
@@ -231,12 +231,10 @@ export default function Todo({ username, accessToken }: IPackage) {
             </tbody>
           </table> 
  
-          <PaginatedItems 
-            page={ page }
+          <PaginatedItems  
             itemsPerPage={ limit }
             total={ total }
             offset={ offset }
-            setOffset={ setOffset }
             handleClickSearch={ handleClickSearch }
             
           />
@@ -263,9 +261,6 @@ export default function Todo({ username, accessToken }: IPackage) {
                   job: Yup.string()
                     .max(50, "Must be 50 characters or less")
                     .required("Job is Required"),
-                    type: Yup.string()                     
-                    .required("Type is Required"),
-
                   type: Yup.string()
                     .oneOf(
                       ['1', '2'],
@@ -282,11 +277,11 @@ export default function Todo({ username, accessToken }: IPackage) {
                   let item:ITodoState = { 
 
                     job: values['job'],                
-                    type: values['type'],
+                    type: Number(values['type']),
                     dueDate: values['dueDate'],
                     remark: values['remark'],
                   };
-                  let result = await addTodo(accessToken, item, limit);
+                  let result:any = await addTodo(accessToken, item, limit);
                   let isError = false;
                   if (result?.statusCode !== 200) {
                     isError = true; 
@@ -362,13 +357,14 @@ export default function Todo({ username, accessToken }: IPackage) {
 
 export async function getServerSideProps(ctx) {
 
-  const session = await getSession(ctx)
-  const accessToken = session?.accessToken || "" 
+  const session: any = await getSession(ctx)
+  const accessToken = session?.accessToken || ""  
  
   // ko call get Todos list here, because we will useEffect to call it,
   let [ user ] = await Promise.all([getProfile(accessToken)]) // [ user ] moi ok, { user } ko co data,ko hieu 
  
   return {
+    
     props: { 
       username: user?.params?.username ? user.params.username : null,
       accessToken: accessToken

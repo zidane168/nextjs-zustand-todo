@@ -5,7 +5,7 @@ import type { NextComponentType  } from 'next' //Import Component type
 
 //Add custom appProp type then use union to add it
 type CustomAppProps = AppProps & {
-  Component: NextComponentType & {auth?: boolean} // add auth type
+  Component: NextComponentType & {auth?: boolean} // add auth type fo fix build
 }
 
 import { SessionProvider, signIn, useSession  } from 'next-auth/react'
@@ -35,7 +35,7 @@ function MyApp({
   
 }
 
-function Auth({ children }) {
+function Auth({ children }: any) {
   const { data: session, status } = useSession()
   const isUser = !!session?.user;
 

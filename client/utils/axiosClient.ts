@@ -13,10 +13,10 @@ const axiosClient = axios.create({
 
 // before send to server
 axiosClient.interceptors.request.use(
-    function (config: AxiosRequestConfig) { 
+    (config: AxiosRequestConfig) : any  => { 
         return config; 
     },
-    function (err) {
+    (err) => {
         return Promise.reject(err)
     }
 )
