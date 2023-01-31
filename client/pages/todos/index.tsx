@@ -75,7 +75,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
 
     fetchData().catch(console.error); 
 
-  }, [limit])
+  }, [limit, page])   // add page here
 
 
   const handleClickSearch = async(e, pageIndex = 1) => {
@@ -83,8 +83,7 @@ export default function Todo({ username, lstTodo, accessToken }: IPackage) {
       e?.preventDefault()
     }
 
-    let queryString = "?"
-    return router.push(`/todos?limit=${limit}&page=${pageIndex}`)
+    setPage(pageIndex);
   }
 
   const closeAddForm = () => {

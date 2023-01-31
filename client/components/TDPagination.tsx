@@ -11,8 +11,7 @@ export const PaginatedItems = ({
     handleClickSearch
 
 }) => {
-
-    const router = useRouter();
+ 
     const [ pageCount, setPageCount ] = useState(0)
 
     useEffect(() => {
@@ -22,27 +21,19 @@ export const PaginatedItems = ({
 
     const handlePageClick  = (e) => {
         handleClickSearch(e, e.selected + 1)
-    }
- 
- 
-    // Invoke when user click to request another page.
-    // const handlePageClick = (event) => {
-    //   const newOffset = (event.selected * itemsPerPage) % items.length;
-    //   console.log(
-    //     `User requested page number ${event.selected}, which is offset ${newOffset}`
-    //   );
-    //   setItemOffset(newOffset);
-    // };
+    } 
   
     return (
       <> 
         <ReactPaginate
           breakLabel="..."
-          nextLabel="next >"
+          nextLabel="Next >"
           onPageChange={handlePageClick}
           pageRangeDisplayed={5}
           pageCount={pageCount}
-          previousLabel="< previous"
+          previousLabel="< Previous"
+          activeLinkClassName="bg-orange-500 p-4 rounded-md text-white"
+          className="flex  justify-center space-x-4 mt-8" 
           renderOnZeroPageCount={null}
         />
       </>

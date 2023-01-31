@@ -153,7 +153,9 @@ const loginForm = () => {
       </Form>
     </Formik>
 
-    <div className="flex text-center mx-auto flex w-[1000px]">
+    <hr className="mt-4" /> 
+
+    <div className="flex text-center mx-auto flex w-[1000px] mt-4">
       <table className="table">
         <thead>
           <tr>
@@ -164,7 +166,7 @@ const loginForm = () => {
             <th> Client </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-left">
           <tr>
             <td> Use NestJS - <span className="required-star"> Moogoose </span>DB connect </td>
             <td> Use NextJS - <span className="required-star"> Zustand Management State </span> with API call</td>
@@ -225,6 +227,12 @@ const loginForm = () => {
             <td> Understand how to call <span className="required-star">API with Get, Post (passing param) </span> ex: GET with params:  let url = todos/search?page=page&limit=limit` 
             </td>
           </tr>
+
+          <tr>
+            <td>  </td>
+            <td> Understand how to apply <span className="required-star"> React Pagination Component</span>, how to style combine with <span className="required-star"> Zustand </span> state management  </td>
+          </tr>
+        
         
 
          
