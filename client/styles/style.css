@@ -91,6 +91,11 @@
    @apply border-l-sky-500 border-l-4 mr-2 shadow-xl
  }
 
+ .ul-guideline-style {
+  @apply px-[20px] list-decimal
+ }
+ 
+
 
  /*Modal*/
 

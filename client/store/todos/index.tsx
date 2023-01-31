@@ -23,9 +23,7 @@ const store = (set:any, get:any) => ({
     fetchTodos: async(accessToken: string, limit: number, page: number, job: string, type: number, status: string) => {  
         // const items = await apiGetTodos(accessToken)
         const items = await apiSearchTodos(accessToken, limit, page, job, type, status) 
-
-        console.log(items)
-
+   
         if (items?.statusCode == 200) {
             await set({ 
                 total: items.params.total,
