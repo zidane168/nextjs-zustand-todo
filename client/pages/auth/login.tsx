@@ -301,7 +301,9 @@ const loginForm = () => {
           </tr>
 
           <tr>
-            <td>  </td>
+            <td> Add <span className="required-star"> Dockerfile, docker-compose </span> for server / client  <br />
+             docker-compose up --build -d 
+            </td>
             <td> Use <span className="required-star">Yup Validation Select/Option Yup with Field </span>  <br/> 
             
               {'<Field name="type" as="select"> <option></option> </Field>'}
