@@ -43,10 +43,7 @@ export class TodosService {
 
     if (total == 0) {
       return new ApiSucceedResponse('No Task!', []);
-    }
-
-    console.log(conditions)
-
+    } 
     const todo = await this.todoModel
       .find(conditions)
       .skip((page - 1) * limit)

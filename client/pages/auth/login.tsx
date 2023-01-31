@@ -166,23 +166,41 @@ const loginForm = () => {
         </thead>
         <tbody className="text-left">
           <tr>
-            <td> Use NestJS - <span className="required-star"> Moogoose </span>DB connect </td>
+            <td> Use NestJS - <span className="required-star"> Moogoose </span>DB connect 
+              <ul className="ul-guideline-style"> 
+                <li>/src/app.module.ts </li>
+                <li>  MongooseModule.forRoot 'mongodb+srv://zidane:xxx@mmm.uuu.zzz.net/yyy', </li>
+              </ul>
+            
+            </td>
             <td> Use NextJS - <span className="required-star"> Zustand Management State </span> with API call
               <ul className="ul-guideline-style"> 
                 <li> /store/todos/index.tsx </li>
                 <li> /pages/todos/index.tsx </li>
                 <li> const total, todos, types, addTodo, removeTodo, markCompleteTodo, fetchTodos = useTodoStore(); </li>
-                
               </ul>
-            
             </td>
           </tr>
           <tr>
-            <td> NestJS - 2 Table  <span className="required-star">  Todos, User </span> Create, Update, Delete, Edit Feature </td>
+            <td> NestJS - 2 Table  <span className="required-star">  Todos, User </span> Create, Update, Delete, Edit Feature 
+              <ul className="ul-guideline-style"> 
+                <li> /src/users/dto </li>
+                <li> /src/users/interface </li>
+                <li> /src/users/schemas </li>
+                <li> /src/users/ </li>
+              </ul>
+
+            </td>
             <td> NextJS - UI with  <span className="required-star"> Add, Update, Delete, Show, Login, Logout, Register </span> </td>
           </tr>
           <tr>
-            <td>  <span className="required-star"> Pagination </span> with moogoose </td>
+            <td>  <span className="required-star"> Pagination </span> with moogoose 
+              <ul className="ul-guideline-style"> 
+                <li> /src/todos/todos.controller.ts </li>
+                <li> /src/todos/todos.service.ts, public sync search , return result here </li>
+              </ul>
+            </td>
+
             <td> Add  <span className="required-star">  ToastMessage </span> Component
               <ul className="ul-guideline-style"> 
                 <li> /components/TDToastMessage.tsx </li>
@@ -198,18 +216,32 @@ const loginForm = () => {
             </td>
           </tr>
           <tr>
-            <td> Apply  <span className="required-star">  JWT Authentication </span> </td>
+            <td> Apply  <span className="required-star">  JWT Authentication </span> 
+              <ul className="ul-guideline-style"> 
+                <li> /src/auth/guard </li>
+                <li> /src/auth/ </li>
+                <li> @UseGuards(JwtAuthGuard) </li>
+                <li> @Request() req: any, JWTAuthGuard will return req.user </li>
+                
+              </ul>
+            </td>
+
             <td> Apply  <span className="required-star"> NextJS next/auth </span>
               <ul className="ul-guideline-style"> 
                 <li> /pages/auth/login.tsx => call signIn("credentials") ... </li>
-                <li> /pages/api/auth/[...nextauth].ts </li>
+                <li> /pages/api/auth/...nextauth.ts </li>
                 <li> call loginMember function => /pages/api/api.member.ts</li>
               </ul>
             
             </td>
           </tr>
           <tr>
-            <td> <span className="required-star">Search with regex, pagination </span>on Server on mongoose query </td>
+            <td> <span className="required-star">Search with regex, pagination </span>on Server on mongoose query 
+              <ul className="ul-guideline-style"> 
+                <li> /src/todos/todo.service.ts </li>
+                <li> conditions ...conditions, job:  regex: '.*'  job  '.*' </li>
+              </ul> 
+            </td>
             <td> Apply <span className="required-star"> EnvConfig,  </span>
               <ul className="ul-guideline-style"> 
                 <li> /ultis/config.tsx </li>
@@ -229,7 +261,12 @@ const loginForm = () => {
             
           </tr>
           <tr>
-            <td> Use Moment Convert to DateTime (Server/Client) </td>
+            <td> Use Moment Convert to DateTime (Server/Client) 
+              <ul className="ul-guideline-style">
+                <li> import * as moment from 'moment'; </li>
+                <li> todo.createDate = moment().toDate(); </li>
+              </ul> 
+            </td>
             <td> Use <span className="required-star">SVG icon from iconfinder </span> 
             
               <ul className="ul-guideline-style">  
@@ -248,7 +285,11 @@ const loginForm = () => {
             </td>
           </tr>
           <tr>
-            <td> Understand how and when to use <span className="required-star">@Body, @Param, @Query </span>, get data from server side </td>
+            <td> Understand how and when to use <span className="required-star">@Body, @Param, @Query </span>, get data from server side 
+              <ul className="ul-guideline-style">
+                <li> Check todos.controller.ts, todos.services.ts </li>
+              </ul> 
+            </td>
             <td> Use <span className="required-star">Axios </span> Make API Call </td>
           </tr>
 
