@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+  nextjs-client:
+    build:
+      context: ./
+      dockerfile: ./client/Dockerfile
+    restart: always
+    image: nextjs-todo-client
+    container_name: nextjs-todo-client
+    ports:
+      - "3001:3000"
+    networks:    
+      - learn-tech-tips
+  nestjs-server:
+    build:
+      context: ./
+      dockerfile: ./server/Dockerfile
+    restart: always
+    image: nestjs-todo-server
+    container_name: nestjs-todo-server
+    ports:
+      - "8001:8000"
+    networks:
+      - learn-tech-tips
+networks:
+  learn-tech-tips:
+    driver: bridge
+
+
+    

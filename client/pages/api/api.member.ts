@@ -32,6 +32,7 @@ export const loginMember = async(
     password: string
 ) => {
     let url = `${envConfig.API_PATH}/users/login`
+    console.log("url: ", url)
 
     try {
         const response = await axiosClient({
